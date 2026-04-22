@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"components\\\\ui\\\\animated-shader-hero.tsx -> @/components/ui/liquid-ether":{"id":6913,"files":["static/chunks/b536a0f1.a1c7e07084a1653f.js","static/chunks/bd904a5c.0897351c142541d5.js","static/chunks/913.a4682ca0028d4bb8.js"]}}';
