@@ -44,7 +44,7 @@ function GlassTabs({
             )}
           >
             <Icon className="size-4 shrink-0" aria-hidden />
-            <span>{tab.label}</span>
+            <span className="uppercase tracking-tight">{tab.label}</span>
           </button>
         )
       })}

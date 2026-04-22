@@ -91,7 +91,7 @@ export default function ScheduleCallModal({
             </div>
             <h3
               id="schedule-call-title"
-              className="unbounded-heading mb-2 text-xl font-semibold text-white"
+              className="unbounded-heading mb-2 text-xl font-semibold uppercase tracking-tight text-white"
             >
               Listo
             </h3>
@@ -102,7 +102,7 @@ export default function ScheduleCallModal({
             <div className="mb-6">
               <h3
                 id="schedule-call-title"
-                className="unbounded-heading mb-2 text-xl font-semibold text-white"
+                className="unbounded-heading mb-2 text-xl font-semibold uppercase tracking-tight text-white"
               >
                 {title}
               </h3>

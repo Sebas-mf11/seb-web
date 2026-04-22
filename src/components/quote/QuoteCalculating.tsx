@@ -91,7 +91,7 @@ export default function QuoteCalculating({ onComplete }: QuoteCalculatingProps) 
           </div>
         </div>
 
-        <h2 className="unbounded-heading mb-3 text-2xl font-semibold text-white md:text-3xl">
+        <h2 className="unbounded-heading mb-3 text-2xl font-semibold uppercase tracking-tight text-white md:text-3xl">
           Construyendo tu propuesta
         </h2>
 

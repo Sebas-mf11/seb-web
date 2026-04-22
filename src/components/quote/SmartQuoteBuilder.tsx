@@ -190,7 +190,7 @@ export default function SmartQuoteBuilder() {
       <div className="space-y-6 xl:col-span-3">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
           <div className="mb-5 flex items-center justify-between">
-            <h3 className="unbounded-heading text-xl font-semibold text-white">
+            <h3 className="unbounded-heading text-xl font-semibold uppercase tracking-tight text-white">
               1. Tipo de página
             </h3>
             <span className="text-xs uppercase tracking-[0.2em] text-amber-300/80">Base</span>
@@ -208,7 +208,7 @@ export default function SmartQuoteBuilder() {
                     : 'border-white/10 bg-white/5 hover:border-white/20',
                 )}
               >
-                <p className="text-sm font-semibold text-white">{type.title}</p>
+                <p className="text-sm font-semibold uppercase tracking-tight text-white">{type.title}</p>
                 <p className="mt-1 text-sm text-white/65">{type.description}</p>
                 <p className="mt-2 text-xs uppercase tracking-wider text-white/50">
                   {SITE_TYPE_PLAN_LINE[type.id]}
@@ -221,7 +221,9 @@ export default function SmartQuoteBuilder() {
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <h2 className="unbounded-heading text-2xl font-semibold text-white">2. Páginas del sitio</h2>
+              <h2 className="unbounded-heading text-2xl font-semibold uppercase tracking-tight text-white">
+                2. Páginas del sitio
+              </h2>
               <p className="raleway-subtitle mt-1 text-sm text-white/60">
                 Las páginas predeterminadas están incluidas. Puedes renombrarlas o agregar nuevas según tu negocio
               </p>
@@ -442,7 +444,7 @@ export default function SmartQuoteBuilder() {
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-          <h3 className="unbounded-heading text-xl font-semibold text-white">
+          <h3 className="unbounded-heading text-xl font-semibold uppercase tracking-tight text-white">
             3. Funcionalidades seleccionadas
           </h3>
           {features.length === 0 ? (
@@ -475,7 +477,9 @@ export default function SmartQuoteBuilder() {
           className="sticky top-24 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
           data-quote-plan-floor={userPlanFloor ?? 'auto'}
         >
-          <h3 className="unbounded-heading text-xl font-semibold text-white">Resumen inteligente</h3>
+          <h3 className="unbounded-heading text-xl font-semibold uppercase tracking-tight text-white">
+            Resumen inteligente
+          </h3>
 
           {applyFeedback ? (
             <div className="rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-xs text-amber-100">

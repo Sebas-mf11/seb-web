@@ -102,7 +102,9 @@ export default function ContactSection() {
     <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 py-12 lg:grid-cols-5 lg:px-8">
       <div className="lg:col-span-3">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
-          <h2 className="unbounded-heading text-2xl font-semibold text-white">Envíanos un mensaje</h2>
+          <h2 className="unbounded-heading text-2xl font-semibold uppercase tracking-tight text-white">
+            Envíanos un mensaje
+          </h2>
           <p className="raleway-subtitle mt-2 text-sm text-white/60">
             Completa los datos y te contactamos con una propuesta clara en menos de 24 horas.
           </p>

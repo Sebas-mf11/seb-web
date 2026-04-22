@@ -28,7 +28,7 @@ export default function PoliticaDatosPage() {
           <Navbar />
         </div>
         <section className="mx-auto max-w-3xl px-6 pb-20 pt-36 md:pt-44">
-          <h1 className="unbounded-heading text-3xl font-semibold leading-tight md:text-4xl">
+          <h1 className="unbounded-heading text-3xl font-semibold uppercase leading-tight tracking-tight md:text-4xl">
             Política de tratamiento de datos personales
           </h1>
           <p className="raleway-subtitle mt-6 text-base leading-relaxed text-white/75">

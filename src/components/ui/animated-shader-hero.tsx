@@ -542,9 +542,9 @@ function TrustBadgeIcon({ icon, index }: { icon: string; index: number }) {
 
 function CtaButton({ btn, variant }: { btn: AnimatedShaderHeroButton; variant: 'primary' | 'secondary' }) {
   const primaryInner =
-    'min-h-[52px] justify-between gap-4 py-3 pl-8 pr-2 text-base font-semibold md:min-h-[56px] md:text-lg'
+    'min-h-11 justify-between gap-3 py-2 pl-5 pr-1.5 text-sm font-semibold md:min-h-12 md:gap-3.5 md:pl-6 md:pr-2 md:text-base'
   const secondaryInner =
-    'min-h-[52px] gap-2 px-8 py-3 text-base font-semibold md:min-h-[56px] md:text-lg'
+    'min-h-11 gap-2 px-5 py-2 text-sm font-semibold md:min-h-12 md:px-6 md:text-base'
 
   if (btn.href) {
     return (
@@ -552,19 +552,19 @@ function CtaButton({ btn, variant }: { btn: AnimatedShaderHeroButton; variant: '
         as={Link}
         href={btn.href}
         onClick={btn.onClick}
-        containerClassName={variant === 'primary' ? 'min-w-[min(100%,280px)]' : undefined}
+        containerClassName={variant === 'primary' ? 'min-w-[min(100%,240px)]' : undefined}
         className={variant === 'primary' ? primaryInner : secondaryInner}
       >
         {variant === 'primary' ? (
           <>
             <span>{btn.text}</span>
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white md:size-10">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white md:size-9">
               <HeroCtaArrow />
             </span>
           </>
         ) : (
           <>
-            <Sparkles className="size-4 shrink-0 text-sky-200" strokeWidth={2} aria-hidden />
+            <Sparkles className="size-3.5 shrink-0 text-sky-200 md:size-4" strokeWidth={2} aria-hidden />
             {btn.text}
           </>
         )}
@@ -577,19 +577,19 @@ function CtaButton({ btn, variant }: { btn: AnimatedShaderHeroButton; variant: '
       as="button"
       type="button"
       onClick={btn.onClick}
-      containerClassName={variant === 'primary' ? 'min-w-[min(100%,280px)]' : undefined}
+      containerClassName={variant === 'primary' ? 'min-w-[min(100%,240px)]' : undefined}
       className={variant === 'primary' ? primaryInner : secondaryInner}
     >
       {variant === 'primary' ? (
         <>
           <span>{btn.text}</span>
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white md:size-10">
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white md:size-9">
             <HeroCtaArrow />
           </span>
         </>
       ) : (
         <>
-          <Sparkles className="size-4 shrink-0 text-sky-200" strokeWidth={2} aria-hidden />
+          <Sparkles className="size-3.5 shrink-0 text-sky-200 md:size-4" strokeWidth={2} aria-hidden />
           {btn.text}
         </>
       )}
@@ -704,7 +704,7 @@ export default function AnimatedShaderHero({
           </div>
 
           {buttons && (
-            <div className="ash-animate-fade-in-up ash-delay-800 mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+            <div className="ash-animate-fade-in-up ash-delay-800 mt-9 flex flex-col justify-center gap-3 sm:flex-row sm:gap-3">
               {buttons.primary && (
                 <CtaButton btn={buttons.primary} variant="primary" />
               )}

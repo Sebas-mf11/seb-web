@@ -38,7 +38,7 @@ export default function ContactFAQ() {
   return (
     <section className="border-t border-white/10 px-6 py-16 md:py-24">
       <div className="mx-auto max-w-3xl text-center">
-        <h2 className="unbounded-heading text-2xl font-semibold text-white md:text-3xl">
+        <h2 className="unbounded-heading text-2xl font-semibold uppercase tracking-tight text-white md:text-3xl">
           Preguntas frecuentes
         </h2>
         <p className="raleway-subtitle mt-3 text-sm font-medium leading-relaxed text-white/60 md:text-base">
@@ -60,7 +60,9 @@ export default function ContactFAQ() {
                 className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-white/[0.04]"
                 aria-expanded={isOpen}
               >
-                <span className="text-sm font-medium text-white md:text-base">{item.question}</span>
+                <span className="text-sm font-medium uppercase tracking-tight text-white md:text-base">
+                  {item.question}
+                </span>
                 <ChevronDown
                   className={cn(
                     'h-5 w-5 shrink-0 text-amber-400/80 transition-transform duration-200',

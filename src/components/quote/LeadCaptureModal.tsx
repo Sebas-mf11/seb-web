@@ -57,7 +57,9 @@ export default function LeadCaptureModal({ open, onClose }: LeadCaptureModalProp
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-green-500/30 bg-green-500/10">
               <CheckCircle2 className="h-8 w-8 text-green-400" aria-hidden />
             </div>
-            <h3 className="mb-2 text-xl font-medium text-white">Propuesta enviada</h3>
+            <h3 className="unbounded-heading mb-2 text-xl font-medium uppercase tracking-tight text-white">
+              Propuesta enviada
+            </h3>
             <p className="text-sm text-white/60">
               En los próximos minutos recibirás el detalle en tu correo. Revisa la carpeta de spam si no lo ves.
             </p>
@@ -65,7 +67,7 @@ export default function LeadCaptureModal({ open, onClose }: LeadCaptureModalProp
         ) : (
           <>
             <div className="mb-6">
-              <h3 className="mb-2 text-xl font-medium text-white">
+              <h3 className="unbounded-heading mb-2 text-xl font-medium uppercase tracking-tight text-white">
                 Recibe tu propuesta por email
               </h3>
               <p className="text-sm text-white/60">

@@ -31,7 +31,7 @@ export default function HeroServices() {
 
         <h1
           id="servicios-desarrollo-hero-heading"
-          className="unbounded-heading mt-8 max-w-4xl text-5xl font-semibold leading-tight text-white md:text-7xl lg:text-8xl"
+          className="unbounded-heading mt-8 max-w-4xl text-5xl font-semibold uppercase leading-tight tracking-tight text-white md:text-7xl lg:text-8xl"
         >
           Todo lo que tu web puede ser
         </h1>

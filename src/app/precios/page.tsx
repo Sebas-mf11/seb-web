@@ -45,7 +45,7 @@ export default function PreciosPage() {
           <span className="inline-flex items-center rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-amber-200">
             Precios
           </span>
-          <h1 className="unbounded-heading mx-auto mt-6 max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">
+          <h1 className="unbounded-heading mx-auto mt-6 max-w-4xl text-4xl font-semibold uppercase leading-tight tracking-tight md:text-6xl">
             Planes claros y cotizador inteligente para tu próxima web
           </h1>
           <p className="raleway-subtitle mx-auto mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/70 md:text-lg">

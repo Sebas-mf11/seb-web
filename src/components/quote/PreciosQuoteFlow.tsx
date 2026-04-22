@@ -41,7 +41,7 @@ export default function PreciosQuoteFlow() {
             transition={{ duration: 0.35 }}
           >
             <div className="mb-10 max-w-3xl">
-              <h2 className="unbounded-heading text-3xl font-semibold leading-tight md:text-4xl">
+              <h2 className="unbounded-heading text-3xl font-semibold uppercase leading-tight tracking-tight md:text-4xl">
                 Personaliza tu página
               </h2>
               <p className="raleway-subtitle mt-4 text-base font-medium leading-relaxed text-white/70">

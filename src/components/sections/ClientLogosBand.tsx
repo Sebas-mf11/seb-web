@@ -4,7 +4,7 @@ import { InfiniteSlider } from '@/components/ui/infinite-slider'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 
 const clients = [
-  { name: 'Luxe Car Club' },
+  { name: 'LuxCar Club' },
   { name: 'The Travel Hub' },
   { name: 'Tu Casa Design' },
   { name: 'Outlet Electro & Hogar' },

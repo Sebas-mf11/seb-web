@@ -98,7 +98,7 @@ export default function PricingCards() {
           >
             <div className="mb-6">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="text-3xl font-bold tracking-tight text-neutral-900">Esencial</h3>
+                <h3 className="text-3xl font-bold uppercase tracking-tight text-neutral-900">Esencial</h3>
                 <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-xs font-medium text-neutral-700 backdrop-blur">
                   Plan inicial
                 </span>
@@ -157,7 +157,7 @@ export default function PricingCards() {
           >
             <div className="mb-6">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="text-3xl font-bold tracking-tight text-neutral-50">Profesional</h3>
+                <h3 className="text-3xl font-bold uppercase tracking-tight text-neutral-50">Profesional</h3>
                 <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-amber-300/40 bg-amber-400/15 px-3 py-1 text-xs font-medium text-amber-100 backdrop-blur">
                   Más elegido
                 </span>
@@ -215,7 +215,7 @@ export default function PricingCards() {
           >
             <div className="mb-6">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="text-3xl font-bold tracking-tight text-amber-100">Avanzado</h3>
+                <h3 className="text-3xl font-bold uppercase tracking-tight text-amber-100">Avanzado</h3>
                 <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-amber-200/35 bg-amber-100/10 px-3 py-1 text-xs font-medium text-amber-100 backdrop-blur">
                   Escala sin límites
                 </span>

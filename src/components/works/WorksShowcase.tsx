@@ -85,7 +85,7 @@ export default function WorksShowcase() {
 
   return (
     <section className="mx-auto max-w-7xl px-6 pb-24 pt-8 md:pb-28">
-      <h2 className="sr-only">Proyectos del portafolio</h2>
+      <h2 className="sr-only uppercase">Proyectos del portafolio</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {works.map((work) => {
           const isActive = activeId === work.id
@@ -116,7 +116,9 @@ export default function WorksShowcase() {
                   </span>
                 ) : null}
               </div>
-              <h3 className="unbounded-heading text-xl font-semibold text-white">{work.name}</h3>
+              <h3 className="unbounded-heading text-xl font-semibold uppercase tracking-tight text-white">
+                {work.name}
+              </h3>
               <p className="mt-2 text-sm text-white/75">{work.tagline}</p>
               <p className="mt-3 text-sm text-white/55">{work.description}</p>
               {work.status !== 'en-construccion' ? (
@@ -142,7 +144,7 @@ export default function WorksShowcase() {
           >
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
-                <h4 className="unbounded-heading text-2xl font-semibold text-white md:text-3xl">
+                <h4 className="unbounded-heading text-2xl font-semibold uppercase tracking-tight text-white md:text-3xl">
                   {activeWork.name}
                 </h4>
                 <p className="mt-2 text-sm text-white/75 md:text-base">{activeWork.description}</p>

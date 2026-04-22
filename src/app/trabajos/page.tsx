@@ -43,7 +43,7 @@ export default function TrabajosPage() {
           <span className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-white/70">
             Portafolio
           </span>
-          <h1 className="unbounded-heading mx-auto mt-6 max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">
+          <h1 className="unbounded-heading mx-auto mt-6 max-w-4xl text-4xl font-semibold uppercase leading-tight tracking-tight md:text-6xl">
             Trabajos que reflejan estrategia, diseño y conversión
           </h1>
           <p className="raleway-subtitle mx-auto mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/70 md:text-lg">

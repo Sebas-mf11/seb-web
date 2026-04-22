@@ -436,7 +436,7 @@ export default function InteractiveLab() {
         <header className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
           <h2
             id="interactive-lab-heading"
-            className="unbounded-heading text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl"
+            className="unbounded-heading text-4xl font-semibold uppercase leading-tight tracking-tight text-white md:text-6xl"
           >
             Explora lo que podemos construir juntos
           </h2>
@@ -557,7 +557,7 @@ export default function InteractiveLab() {
                           <Icon className="size-5" aria-hidden />
                         </div>
                         <div className="min-w-0 flex-1 pr-6">
-                          <p className="unbounded-heading text-base font-semibold tracking-tight text-white">
+                          <p className="unbounded-heading text-base font-semibold uppercase tracking-tight text-white">
                             {f.title}
                           </p>
                           <p className="raleway-subtitle mt-1 text-sm font-medium leading-relaxed text-white/70">

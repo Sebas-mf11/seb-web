@@ -10,7 +10,7 @@ export default function ContactLiveCTA() {
   return (
     <section className="border-t border-white/10 px-6 py-16 md:py-20">
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="unbounded-heading text-2xl font-semibold text-white md:text-3xl">
+        <h2 className="unbounded-heading text-2xl font-semibold uppercase tracking-tight text-white md:text-3xl">
           ¿Prefieres conversar en vivo?
         </h2>
         <p className="raleway-subtitle mt-3 text-sm font-medium leading-relaxed text-white/60 md:text-base">

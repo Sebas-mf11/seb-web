@@ -4,7 +4,7 @@ export default function ContactHero() {
       <span className="inline-flex items-center rounded-full border border-amber-300/35 bg-amber-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-amber-200">
         CONTACTO
       </span>
-      <h1 className="unbounded-heading mt-6 max-w-4xl text-5xl font-semibold leading-tight tracking-tight text-white md:text-7xl">
+      <h1 className="unbounded-heading mt-6 max-w-4xl text-5xl font-semibold uppercase leading-tight tracking-tight text-white md:text-7xl">
         Hablemos de tu proyecto
       </h1>
       <p className="raleway-subtitle mx-auto mt-5 max-w-2xl text-base font-medium leading-relaxed text-white/60 md:text-lg">

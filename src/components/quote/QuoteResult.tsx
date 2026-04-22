@@ -97,7 +97,7 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
           <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-amber-400/30 bg-amber-400/10">
             <CheckCircle2 className="h-8 w-8 text-amber-400" aria-hidden />
           </div>
-          <h1 className="unbounded-heading mb-4 text-3xl font-bold text-white md:text-5xl">
+          <h1 className="unbounded-heading mb-4 text-3xl font-bold uppercase tracking-tight text-white md:text-5xl">
             Tu propuesta está lista
           </h1>
           <p className="raleway-subtitle max-w-2xl text-base text-white/60 md:text-lg">
@@ -134,7 +134,7 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
           transition={{ delay: 0.5, duration: 0.45 }}
           className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8"
         >
-          <h2 className="unbounded-heading mb-6 text-xl font-semibold text-white">
+          <h2 className="unbounded-heading mb-6 text-xl font-semibold uppercase tracking-tight text-white">
             Desglose de la propuesta
           </h2>
 
@@ -215,7 +215,9 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
           transition={{ delay: 0.65, duration: 0.45 }}
           className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8"
         >
-          <h2 className="unbounded-heading mb-2 text-xl font-semibold text-white">¿Qué sigue?</h2>
+          <h2 className="unbounded-heading mb-2 text-xl font-semibold uppercase tracking-tight text-white">
+            ¿Qué sigue?
+          </h2>
           <p className="raleway-subtitle mb-6 text-sm text-white/60">
             Elige cómo quieres continuar. Todas las opciones son sin compromiso.
           </p>
@@ -230,7 +232,7 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
               onClick={handleScheduleCall}
             >
               <Calendar className="mb-3 h-5 w-5 text-neutral-700" aria-hidden />
-              <div className="text-sm font-medium">Agendar llamada</div>
+              <div className="text-sm font-medium uppercase tracking-tight">Agendar llamada</div>
               <div className="mt-1 text-xs text-neutral-600">20 minutos sin costo</div>
             </HoverBorderGradient>
 
@@ -242,7 +244,7 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
               onClick={handleWhatsApp}
             >
               <MessageCircle className="mb-3 h-5 w-5 text-green-400" aria-hidden />
-              <div className="text-sm font-medium">WhatsApp directo</div>
+              <div className="text-sm font-medium uppercase tracking-tight">WhatsApp directo</div>
               <div className="mt-1 text-xs text-white/50">Respuesta en minutos</div>
             </HoverBorderGradient>
 
@@ -254,7 +256,7 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
               onClick={onEmailRequest}
             >
               <Download className="mb-3 h-5 w-5 text-white/70" aria-hidden />
-              <div className="text-sm font-medium">Recibir por email</div>
+              <div className="text-sm font-medium uppercase tracking-tight">Recibir por email</div>
               <div className="mt-1 text-xs text-white/50">PDF con el detalle</div>
             </HoverBorderGradient>
           </div>

@@ -215,7 +215,7 @@ export default function WebAnatomy() {
         <header className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
           <h2
             id="web-anatomy-heading"
-            className="unbounded-heading text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl"
+            className="unbounded-heading text-4xl font-semibold uppercase leading-tight tracking-tight text-white md:text-6xl"
           >
             Cada parte de tu web tiene una razón
           </h2>
@@ -248,7 +248,7 @@ export default function WebAnatomy() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="unbounded-heading text-2xl font-semibold leading-tight tracking-tight text-white md:text-3xl">
+                <h3 className="unbounded-heading text-2xl font-semibold uppercase leading-tight tracking-tight text-white md:text-3xl">
                   {content.title}
                 </h3>
                 <p className="raleway-subtitle mt-4 text-base font-medium leading-relaxed text-white/70 md:text-lg">
