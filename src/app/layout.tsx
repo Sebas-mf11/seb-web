@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import type { Metadata } from 'next'
 import { Raleway, Unbounded, Zen_Dots } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'

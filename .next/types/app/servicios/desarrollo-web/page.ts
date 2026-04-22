@@ -1,4 +1,4 @@
-// File: C:\Users\sebas\OneDrive\Desktop\Marcas\Seb\src\app\servicios\desarrollo-web\page.tsx
+export const runtime = 'edge';// File: C:\Users\sebas\OneDrive\Desktop\Marcas\Seb\src\app\servicios\desarrollo-web\page.tsx
 import * as entry from '../../../../../src/app/servicios/desarrollo-web/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

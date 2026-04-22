@@ -1,33 +1,30 @@
-import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+'use client';
 
-import { buildPageMetadata } from '@/lib/seo-metadata'
+import { useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-type PlanParam = 'esencial' | 'profesional' | 'avanzado'
+type PlanParam = 'esencial' | 'profesional' | 'avanzado';
 
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Cotiza tu web a medida — SEB',
-  description:
-    'Arma tu web con las funcionalidades que necesitas. Cotización instantánea y personalizada sin compromiso.',
-  keywords: [
-    'cotizar página web',
-    'cotizador',
-    'presupuesto web',
-    'SEB',
-    'Colombia',
-  ],
-  path: '/cotizador',
-})
+export default function CotizadorRedirect() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-export default function CotizadorRedirectPage({
-  searchParams,
-}: {
-  searchParams: { plan?: string }
-}) {
-  const raw = searchParams.plan
-  const plan =
-    raw === 'esencial' || raw === 'profesional' || raw === 'avanzado'
-      ? (raw as PlanParam)
-      : null
-  redirect(plan ? `/precios?plan=${plan}` : '/precios')
+  useEffect(() => {
+    const raw = searchParams.get('plan');
+    const plan =
+      raw === 'esencial' || raw === 'profesional' || raw === 'avanzado'
+        ? (raw as PlanParam)
+        : null;
+    const target = plan ? `/precios?plan=${plan}` : '/precios';
+    router.replace(target);
+  }, [router, searchParams]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="flex items-center gap-3 text-white/60 text-sm">
+        <div className="w-4 h-4 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+        <span>Cargando cotizador</span>
+      </div>
+    </div>
+  );
 }
