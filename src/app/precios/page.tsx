@@ -3,9 +3,11 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import PreciosQuoteFlow from '@/components/quote/PreciosQuoteFlow'
+import ScrollToPersonalizaOnLoad from '@/components/precios/ScrollToPersonalizaOnLoad'
 import Footer from '@/components/sections/Footer'
 import Navbar from '@/components/sections/Navbar'
 import PricingCards from '@/components/ui/pricing-component'
+import { PERSONALIZA_SECTION_ID } from '@/lib/precios-personaliza-nav'
 import { buildPageMetadata } from '@/lib/seo-metadata'
 
 export const metadata: Metadata = buildPageMetadata({
@@ -25,6 +27,7 @@ export const metadata: Metadata = buildPageMetadata({
 export default function PreciosPage() {
   return (
     <main className="min-h-svh bg-neutral-950 text-white antialiased">
+      <ScrollToPersonalizaOnLoad />
       <div className="relative overflow-hidden border-b border-white/10">
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -60,7 +63,10 @@ export default function PreciosPage() {
         <PricingCards />
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-24 pt-10 md:pb-28 md:pt-14">
+      <section
+        id={PERSONALIZA_SECTION_ID}
+        className="mx-auto max-w-7xl scroll-mt-28 px-6 pb-24 pt-10 md:scroll-mt-32 md:pb-28 md:pt-14"
+      >
         <Suspense fallback={<div className="min-h-[50vh] animate-pulse rounded-2xl bg-white/5" aria-hidden />}>
           <PreciosQuoteFlow />
         </Suspense>

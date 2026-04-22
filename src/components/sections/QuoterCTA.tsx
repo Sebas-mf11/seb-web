@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import { PRECIOS_PERSONALIZA_HREF } from '@/lib/precios-personaliza-nav'
 
 export default function QuoterCTA() {
   return (
@@ -22,7 +23,7 @@ export default function QuoterCTA() {
         </p>
         <HoverBorderGradient
           as={Link}
-          href="/cotizador"
+          href={PRECIOS_PERSONALIZA_HREF}
           containerClassName="mt-10 inline-flex"
           className="min-h-11 px-10 py-4 text-base font-semibold"
         >

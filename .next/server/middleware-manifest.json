@@ -1,6 +1,85 @@
 {
   "version": 3,
   "middleware": {},
-  "functions": {},
+  "functions": {
+    "/servicios/desarrollo-web/page": {
+      "files": [
+        "server/server-reference-manifest.js",
+        "server/app/servicios/desarrollo-web/page_client-reference-manifest.js",
+        "server/middleware-build-manifest.js",
+        "server/middleware-react-loadable-manifest.js",
+        "server/next-font-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/edge-runtime-webpack.js",
+        "server/app/servicios/desarrollo-web/page.js"
+      ],
+      "name": "app/servicios/desarrollo-web/page",
+      "page": "/servicios/desarrollo-web/page",
+      "matchers": [
+        {
+          "regexp": "^/servicios/desarrollo\\-web$",
+          "originalSource": "/servicios/desarrollo-web"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "uKRYmk/ZL4Ywm1oD86Io9zzQBxiQlph+TZFZMOQi7f8="
+      }
+    },
+    "/page": {
+      "files": [
+        "server/server-reference-manifest.js",
+        "server/app/page_client-reference-manifest.js",
+        "server/middleware-build-manifest.js",
+        "server/middleware-react-loadable-manifest.js",
+        "server/next-font-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/edge-runtime-webpack.js",
+        "server/app/page.js"
+      ],
+      "name": "app/page",
+      "page": "/page",
+      "matchers": [
+        {
+          "regexp": "^/$",
+          "originalSource": "/"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "uKRYmk/ZL4Ywm1oD86Io9zzQBxiQlph+TZFZMOQi7f8="
+      }
+    },
+    "/precios/page": {
+      "files": [
+        "server/server-reference-manifest.js",
+        "server/app/precios/page_client-reference-manifest.js",
+        "server/middleware-build-manifest.js",
+        "server/middleware-react-loadable-manifest.js",
+        "server/next-font-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/edge-runtime-webpack.js",
+        "server/app/precios/page.js"
+      ],
+      "name": "app/precios/page",
+      "page": "/precios/page",
+      "matchers": [
+        {
+          "regexp": "^/precios$",
+          "originalSource": "/precios"
+        }
+      ],
+      "wasm": [],
+      "assets": [],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "uKRYmk/ZL4Ywm1oD86Io9zzQBxiQlph+TZFZMOQi7f8="
+      }
+    }
+  },
   "sortedMiddleware": []
 }

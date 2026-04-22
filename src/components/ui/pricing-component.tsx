@@ -1,11 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import { Check } from 'lucide-react'
 
-import type { PlanKey } from '@/lib/stores/quoteStore'
-
-const PLAN_LINK = (plan: PlanKey) => `/cotizador?plan=${plan}`
+import { scrollToPersonalizaSection } from '@/lib/precios-personaliza-nav'
+import { type PlanKey, useQuoteStore } from '@/lib/stores/quoteStore'
 
 function FeatureList({
   items,
@@ -33,6 +31,15 @@ function FeatureList({
 }
 
 export default function PricingCards() {
+  const setUserPlanFloor = useQuoteStore((s) => s.setUserPlanFloor)
+  const setQuoteFlowStep = useQuoteStore((s) => s.setQuoteFlowStep)
+
+  const handleEmpezarPlan = (plan: PlanKey) => {
+    setUserPlanFloor(plan)
+    setQuoteFlowStep('configuring')
+    scrollToPersonalizaSection()
+  }
+
   const esencialFeatures = [
     'Diseño responsive y personalizado',
     'Animaciones al scroll',
@@ -97,9 +104,11 @@ export default function PricingCards() {
             ].join(' ')}
           >
             <div className="mb-6">
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-3xl font-bold uppercase tracking-tight text-neutral-900">Esencial</h3>
-                <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-xs font-medium text-neutral-700 backdrop-blur">
+              <div className="flex items-center justify-between gap-2 sm:gap-3">
+                <h3 className="min-w-0 flex-1 text-lg font-bold uppercase leading-tight tracking-tight text-neutral-900 sm:text-xl">
+                  Esencial
+                </h3>
+                <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-neutral-200 bg-white/70 px-2.5 py-1 text-[11px] font-medium text-neutral-700 backdrop-blur sm:px-3 sm:text-xs">
                   Plan inicial
                 </span>
               </div>
@@ -113,12 +122,13 @@ export default function PricingCards() {
               <div className="mt-1 text-sm font-medium text-neutral-500">Pago único</div>
             </div>
 
-            <Link
-              href={PLAN_LINK('esencial')}
+            <button
+              type="button"
+              onClick={() => handleEmpezarPlan('esencial')}
               className="mt-6 flex w-full items-center justify-center rounded-full border border-neutral-800/15 bg-transparent px-5 py-3.5 text-sm font-semibold text-neutral-900 transition-colors duration-300 hover:bg-neutral-900/[0.05]"
             >
               Empezar con Esencial
-            </Link>
+            </button>
           </div>
 
           <div
@@ -156,9 +166,11 @@ export default function PricingCards() {
             ].join(' ')}
           >
             <div className="mb-6">
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-3xl font-bold uppercase tracking-tight text-neutral-50">Profesional</h3>
-                <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-amber-300/40 bg-amber-400/15 px-3 py-1 text-xs font-medium text-amber-100 backdrop-blur">
+              <div className="flex items-center justify-between gap-2 sm:gap-3">
+                <h3 className="min-w-0 flex-1 text-lg font-bold uppercase leading-tight tracking-tight text-neutral-50 sm:text-xl">
+                  Profesional
+                </h3>
+                <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-amber-300/40 bg-amber-400/15 px-2.5 py-1 text-[11px] font-medium text-amber-100 backdrop-blur sm:px-3 sm:text-xs">
                   Más elegido
                 </span>
               </div>
@@ -172,12 +184,13 @@ export default function PricingCards() {
               <div className="mt-1 text-sm font-medium text-neutral-400">Pago único</div>
             </div>
 
-            <Link
-              href={PLAN_LINK('profesional')}
+            <button
+              type="button"
+              onClick={() => handleEmpezarPlan('profesional')}
               className="mt-6 flex w-full items-center justify-center rounded-full bg-amber-400 px-5 py-3.5 text-sm font-semibold text-neutral-950 transition-colors duration-300 hover:bg-amber-300"
             >
               Empezar con Profesional
-            </Link>
+            </button>
           </div>
 
           <div
@@ -214,9 +227,11 @@ export default function PricingCards() {
             ].join(' ')}
           >
             <div className="mb-6">
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-3xl font-bold uppercase tracking-tight text-amber-100">Avanzado</h3>
-                <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-amber-200/35 bg-amber-100/10 px-3 py-1 text-xs font-medium text-amber-100 backdrop-blur">
+              <div className="flex items-center justify-between gap-2 sm:gap-3">
+                <h3 className="min-w-0 flex-1 text-lg font-bold uppercase leading-tight tracking-tight text-amber-100 sm:text-xl">
+                  Avanzado
+                </h3>
+                <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-amber-200/35 bg-amber-100/10 px-2.5 py-1 text-[11px] font-medium text-amber-100 backdrop-blur sm:px-3 sm:text-xs">
                   Escala sin límites
                 </span>
               </div>
@@ -230,12 +245,13 @@ export default function PricingCards() {
               <div className="mt-1 text-sm font-medium text-amber-100/60">Pago único</div>
             </div>
 
-            <Link
-              href={PLAN_LINK('avanzado')}
+            <button
+              type="button"
+              onClick={() => handleEmpezarPlan('avanzado')}
               className="mt-6 flex w-full items-center justify-center rounded-full border border-amber-400/40 bg-amber-400/5 px-5 py-3.5 text-sm font-semibold text-amber-100 transition-colors duration-300 hover:bg-amber-400/10"
             >
               Empezar con Avanzado
-            </Link>
+            </button>
           </div>
 
           <div

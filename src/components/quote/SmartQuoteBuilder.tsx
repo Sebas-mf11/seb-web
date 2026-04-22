@@ -58,15 +58,6 @@ const SITE_TYPES: Array<{ id: Exclude<SiteType, null>; title: string; descriptio
   },
 ]
 
-const SITE_TYPE_PLAN_LINE: Record<Exclude<SiteType, null>, string> = {
-  corporativa: 'Desde plan Esencial',
-  landing: 'Desde plan Esencial',
-  portafolio: 'Desde plan Esencial',
-  blog: 'Desde plan Profesional',
-  reservas: 'Desde plan Profesional',
-  ecommerce: 'Plan Avanzado',
-}
-
 const PAGE_SUGGESTIONS: Record<
   string,
   Array<{ id: string; name: string; description: string }>
@@ -210,9 +201,6 @@ export default function SmartQuoteBuilder() {
               >
                 <p className="text-sm font-semibold uppercase tracking-tight text-white">{type.title}</p>
                 <p className="mt-1 text-sm text-white/65">{type.description}</p>
-                <p className="mt-2 text-xs uppercase tracking-wider text-white/50">
-                  {SITE_TYPE_PLAN_LINE[type.id]}
-                </p>
               </button>
             ))}
           </div>

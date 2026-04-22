@@ -15,6 +15,7 @@ import { useShallow } from 'zustand/react/shallow'
 import ScheduleCallModal from '@/components/quote/ScheduleCallModal'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import { trackQuoteResultViewed, trackWhatsAppClick } from '@/lib/analytics'
+import { buildQuoteSummaryWhatsAppMessage } from '@/lib/quote-whatsapp-message'
 import { buildSebWhatsAppUrl } from '@/lib/site-contact'
 import { MAINTENANCE_MONTHLY, useQuoteStore } from '@/lib/stores/quoteStore'
 import { formatPrice } from '@/lib/utils'
@@ -30,13 +31,11 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
   useEffect(() => {
     trackQuoteResultViewed()
   }, [])
-  const { pages, includesMaintenance } = useQuoteStore(
+  const { siteType, pages, includesMaintenance } = useQuoteStore(
     useShallow((s) => ({
       siteType: s.siteType,
       pages: s.pages,
-      features: s.features,
       includesMaintenance: s.includesMaintenance,
-      userPlanFloor: s.userPlanFloor,
     })),
   )
   const calculateQuote = useQuoteStore((s) => s.calculateQuote)
@@ -48,13 +47,13 @@ export default function QuoteResult({ onBack, onEmailRequest }: QuoteResultProps
 
   const handleWhatsApp = () => {
     trackWhatsAppClick('quote_result')
-    window.open(
-      buildSebWhatsAppUrl(
-        'Hola, acabo de ver el resultado de mi cotización en la página de precios de SEB y quiero coordinar los siguientes pasos',
-      ),
-      '_blank',
-      'noopener,noreferrer',
-    )
+    const message = buildQuoteSummaryWhatsAppMessage({
+      siteType,
+      pages,
+      quote,
+      includesMaintenance,
+    })
+    window.open(buildSebWhatsAppUrl(message), '_blank', 'noopener,noreferrer')
   }
 
   const planTitle =

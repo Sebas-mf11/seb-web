@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import SiteLogo from '@/components/brand/SiteLogo'
+import { PRECIOS_PERSONALIZA_HREF } from '@/lib/precios-personaliza-nav'
 import { SEB_CONTACT_EMAIL } from '@/lib/site-contact'
 
 export default function Footer() {
@@ -46,7 +47,7 @@ export default function Footer() {
               Contacto
             </p>
             <div className="space-y-2.5 text-sm text-white/75">
-              <Link href="/cotizador" className="block transition-colors hover:text-white">
+              <Link href={PRECIOS_PERSONALIZA_HREF} className="block transition-colors hover:text-white">
                 Cotizar
               </Link>
               <Link href="/servicios/desarrollo-web" className="block transition-colors hover:text-white">

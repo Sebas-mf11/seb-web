@@ -6,6 +6,7 @@ import { useState } from 'react'
 
 import SiteLogo from '@/components/brand/SiteLogo'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import { PRECIOS_PERSONALIZA_HREF } from '@/lib/precios-personaliza-nav'
 
 const navItems: { label: string; href: string }[] = [
   { label: 'Inicio', href: '/' },
@@ -88,7 +89,7 @@ export default function Navbar() {
 
         <HoverBorderGradient
           as={Link}
-          href="/cotizador"
+          href={PRECIOS_PERSONALIZA_HREF}
           onClick={closeMenu}
           className="min-h-10 gap-2.5 py-2 pl-5 pr-2 text-sm font-medium"
           containerClassName="hidden md:inline-flex"
@@ -135,7 +136,7 @@ export default function Navbar() {
             ))}
             <HoverBorderGradient
               as={Link}
-              href="/cotizador"
+              href={PRECIOS_PERSONALIZA_HREF}
               onClick={closeMenu}
               className="min-h-11 gap-2.5 py-2.5 pl-5 pr-2 text-sm font-medium"
               containerClassName="mt-3 w-fit"

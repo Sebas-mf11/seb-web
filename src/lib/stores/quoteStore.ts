@@ -56,15 +56,15 @@ export const FEATURE_REQUIREMENTS: Record<
   menu: { minPlan: 'profesional', includedInPlan: 'profesional' },
   panel: { minPlan: 'profesional', includedInPlan: 'profesional' },
 
-  reservas: { minPlan: 'esencial', premiumExtra: 200000, includedInPlan: 'avanzado' },
-  tienda: { minPlan: 'profesional', premiumExtra: 400000, includedInPlan: 'avanzado' },
-  cotizador: { minPlan: 'profesional', premiumExtra: 250000, includedInPlan: 'avanzado' },
+  reservas: { minPlan: 'esencial', premiumExtra: 150000, includedInPlan: 'avanzado' },
+  tienda: { minPlan: 'profesional', premiumExtra: 200000, includedInPlan: 'avanzado' },
+  cotizador: { minPlan: 'profesional', premiumExtra: 75000, includedInPlan: 'avanzado' },
   miembros: { minPlan: 'profesional', premiumExtra: 300000, includedInPlan: 'avanzado' },
   idiomas: { minPlan: 'esencial', premiumExtra: 150000, includedInPlan: 'avanzado' },
   chatbot: { minPlan: 'esencial', premiumExtra: 150000, includedInPlan: 'avanzado' },
-  busqueda: { minPlan: 'esencial', premiumExtra: 120000, includedInPlan: 'avanzado' },
-  recomendaciones: { minPlan: 'profesional', premiumExtra: 100000, includedInPlan: 'avanzado' },
-  generador: { minPlan: 'profesional', premiumExtra: 180000, includedInPlan: 'avanzado' },
+  busqueda: { minPlan: 'esencial', premiumExtra: 80000, includedInPlan: 'avanzado' },
+  recomendaciones: { minPlan: 'profesional', premiumExtra: 80000, includedInPlan: 'avanzado' },
+  generador: { minPlan: 'profesional', premiumExtra: 170000, includedInPlan: 'avanzado' },
 }
 
 export const PLAN_PRICES = {

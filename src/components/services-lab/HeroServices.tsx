@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import { PRECIOS_PERSONALIZA_HREF } from '@/lib/precios-personaliza-nav'
 
 export default function HeroServices() {
   return (
@@ -45,7 +46,7 @@ export default function HeroServices() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <HoverBorderGradient
             as={Link}
-            href="/cotizador"
+            href={PRECIOS_PERSONALIZA_HREF}
             containerClassName="raleway-subtitle inline-flex"
             className="min-h-11 gap-2 px-8 py-3.5 text-sm font-semibold md:text-base"
           >

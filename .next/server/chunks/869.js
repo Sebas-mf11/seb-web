@@ -1,1 +1,0 @@
-"use strict";exports.id=869,exports.ids=[869],exports.modules={1869:(e,s,r)=>{r.r(s),r.d(s,{default:()=>t});let t=(0,r(8570).createProxy)(String.raw`C:\Users\sebas\OneDrive\Desktop\Marcas\Seb\src\components\services-lab\InteractiveLab.tsx#default`)}};

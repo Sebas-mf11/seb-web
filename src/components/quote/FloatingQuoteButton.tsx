@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import { markPreciosPersonalizaScrollIntent } from '@/lib/precios-personaliza-nav'
 import { useQuoteStore } from '@/lib/stores/quoteStore'
 
 export default function FloatingQuoteButton() {
@@ -47,7 +48,10 @@ export default function FloatingQuoteButton() {
         >
           <HoverBorderGradient
             type="button"
-            onClick={() => router.push('/cotizador')}
+            onClick={() => {
+              markPreciosPersonalizaScrollIntent()
+              router.push('/precios')
+            }}
             className="min-h-11 gap-3 px-5 py-4 text-sm font-medium shadow-[0_8px_32px_rgba(15,23,42,0.45)]"
           >
             <div className="relative">

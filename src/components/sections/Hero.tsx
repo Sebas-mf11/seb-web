@@ -2,6 +2,7 @@
 
 import { Sparkles } from 'lucide-react'
 import AnimatedShaderHero from '@/components/ui/animated-shader-hero'
+import { PRECIOS_PERSONALIZA_HREF } from '@/lib/precios-personaliza-nav'
 
 export default function Hero() {
   return (
@@ -22,7 +23,10 @@ export default function Hero() {
       }}
       subtitle="Diseño y desarrollo web para emprendedores valientes, empresas en crecimiento y marcas que apuntan alto."
       buttons={{
-        primary: { text: 'Comenzar proyecto', href: '/cotizador' },
+        primary: {
+          text: 'Comenzar proyecto',
+          href: PRECIOS_PERSONALIZA_HREF,
+        },
         secondary: { text: 'Ver trabajos', href: '/trabajos' },
       }}
     />

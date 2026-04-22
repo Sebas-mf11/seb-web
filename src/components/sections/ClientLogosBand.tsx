@@ -6,10 +6,8 @@ import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 const clients = [
   { name: 'LuxCar Club' },
   { name: 'The Travel Hub' },
-  { name: 'Tu Casa Design' },
-  { name: 'Outlet Electro & Hogar' },
-  { name: 'A&E Energy' },
-  { name: 'Distrifrenos Hervar' },
+  { name: 'Wilor Comercial' },
+  { name: 'Flower of the Forest' },
 ]
 
 export default function ClientLogosBand() {
