@@ -13,7 +13,7 @@ export default function CotizadorRedirect() {
     const raw = searchParams.get('plan');
     const plan =
       raw === 'esencial' || raw === 'profesional' || raw === 'avanzado'
-        ? (raw as PlanParam)
+        ? (raw as PlanParam)  
         : null;
     const target = plan ? `/precios?plan=${plan}` : '/precios';
     router.replace(target);

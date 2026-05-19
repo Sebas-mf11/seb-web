@@ -39,13 +39,13 @@ const projects: FeaturedProject[] = [
     logoBgClass: 'bg-black',
   },
   {
-    sector: 'Retail de muebles',
-    title: 'Tu Casa Design',
+    sector: 'Decoración y hogar',
+    title: 'Wilor Comercial',
     tags: 'E-commerce · Catálogo · UX',
     href: '/trabajos',
     image:
       'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
-    alt: 'Interior con muebles',
+    alt: 'Interior con decoración para el hogar — Wilor Comercial',
   },
 ]
 

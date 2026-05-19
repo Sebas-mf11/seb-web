@@ -25,7 +25,7 @@
       "assets": [],
       "env": {
         "__NEXT_BUILD_ID": "development",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "+1RHhKr/0jWB7vQ0BXgt4ez4yGbnEEWSOX8WkAiMTaM="
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "e859Rww9iTbVbBjYzEXuHZaO3bREKK62IR1ZvyBuwTA="
       }
     },
     "/trabajos/page": {
@@ -51,7 +51,7 @@
       "assets": [],
       "env": {
         "__NEXT_BUILD_ID": "development",
-        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "+1RHhKr/0jWB7vQ0BXgt4ez4yGbnEEWSOX8WkAiMTaM="
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "e859Rww9iTbVbBjYzEXuHZaO3bREKK62IR1ZvyBuwTA="
       }
     }
   },

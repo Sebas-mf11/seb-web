@@ -16,7 +16,6 @@ type WorkItem = {
   status?: 'en-construccion'
   images: string[]
   video?: string
-  logo?: string
 }
 
 const works: WorkItem[] = [
@@ -53,7 +52,7 @@ const works: WorkItem[] = [
     description: 'Proyecto e-commerce para catálogo y compra online de decoración.',
     siteType: 'E-commerce',
     images: [],
-    video: '/videos/wilor.mp4',
+    video: '/videos/wilor_2.mp4',
   },
   {
     id: 'outlet-electro-hogar',
@@ -63,7 +62,6 @@ const works: WorkItem[] = [
     siteType: 'E-commerce',
     status: 'en-construccion',
     images: [],
-    logo: '/images/logo-fondo.png',
   },
 ]
 
@@ -123,19 +121,6 @@ export default function WorksShowcase() {
                 {work.name}
               </h3>
               <p className="mt-2 text-sm text-white/75">{work.tagline}</p>
-              {work.logo ? (
-                <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-black">
-                  <div className="relative aspect-[1024/380] w-full">
-                    <Image
-                      src={work.logo}
-                      alt={`${work.name} logo`}
-                      fill
-                      className="object-contain object-center"
-                      sizes="(max-width: 768px) 100vw, 420px"
-                    />
-                  </div>
-                </div>
-              ) : null}
               <p className="mt-3 text-sm text-white/55">{work.description}</p>
               {work.status !== 'en-construccion' ? (
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-300">
