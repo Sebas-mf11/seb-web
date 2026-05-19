@@ -15,6 +15,8 @@ type WorkItem = {
   siteType: string
   status?: 'en-construccion'
   images: string[]
+  video?: string
+  logo?: string
 }
 
 const works: WorkItem[] = [
@@ -50,17 +52,18 @@ const works: WorkItem[] = [
     tagline: 'Empresa comercializadora de decoración de casas',
     description: 'Proyecto e-commerce para catálogo y compra online de decoración.',
     siteType: 'E-commerce',
-    status: 'en-construccion',
     images: [],
+    video: '/videos/wilor.mp4',
   },
   {
-    id: 'flower-of-the-forest',
-    name: 'Flower of the Forest',
-    tagline: 'Mantenimiento de jardín y landscaping (Cape Cod, EEUU)',
-    description: 'Sitio corporativo para servicios, cobertura y captación de leads.',
-    siteType: 'Corporativa',
+    id: 'outlet-electro-hogar',
+    name: 'Outlet Electro & Hogar',
+    tagline: 'Venta de electrodomésticos para el hogar',
+    description: 'Tienda online para catálogo y compra de electrodomésticos.',
+    siteType: 'E-commerce',
     status: 'en-construccion',
     images: [],
+    logo: '/images/logo-fondo.png',
   },
 ]
 
@@ -120,6 +123,19 @@ export default function WorksShowcase() {
                 {work.name}
               </h3>
               <p className="mt-2 text-sm text-white/75">{work.tagline}</p>
+              {work.logo ? (
+                <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-black">
+                  <div className="relative aspect-[1024/380] w-full">
+                    <Image
+                      src={work.logo}
+                      alt={`${work.name} logo`}
+                      fill
+                      className="object-contain object-center"
+                      sizes="(max-width: 768px) 100vw, 420px"
+                    />
+                  </div>
+                </div>
+              ) : null}
               <p className="mt-3 text-sm text-white/55">{work.description}</p>
               {work.status !== 'en-construccion' ? (
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-300">
@@ -159,53 +175,68 @@ export default function WorksShowcase() {
               </button>
             </div>
 
-            <div className="relative">
-              <div
-                ref={carouselRef}
-                className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:thin]"
-              >
-                {activeWork.images.map((image, idx) => (
-                  <div
-                    key={`${activeWork.id}-${idx}`}
-                    className="w-[min(92vw,58rem)] shrink-0 snap-start"
-                  >
-                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-inner shadow-black/40">
-                      {/*
-                        Capturas ~1890×860 (~2.2:1). Antes: altura fija baja + object-cover recortaba mucho.
-                        Ahora la caja sigue esa proporción y object-contain muestra la imagen completa.
-                      */}
-                      <div className="relative aspect-[1890/860] w-full">
-                        <Image
-                          src={image}
-                          alt={`${activeWork.name} captura ${idx + 1}`}
-                          fill
-                          className="object-contain object-center"
-                          sizes="(max-width: 768px) 100vw, 896px"
-                          priority={idx === 0}
-                        />
+            {activeWork.video ? (
+              <div className="mx-auto w-full max-w-5xl">
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-inner shadow-black/40">
+                  <video
+                    key={activeWork.video}
+                    src={activeWork.video}
+                    className="h-auto w-full"
+                    controls
+                    playsInline
+                    preload="metadata"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="relative">
+                <div
+                  ref={carouselRef}
+                  className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:thin]"
+                >
+                  {activeWork.images.map((image, idx) => (
+                    <div
+                      key={`${activeWork.id}-${idx}`}
+                      className="w-[min(92vw,58rem)] shrink-0 snap-start"
+                    >
+                      <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-inner shadow-black/40">
+                        {/*
+                          Capturas ~1890×860 (~2.2:1). Antes: altura fija baja + object-cover recortaba mucho.
+                          Ahora la caja sigue esa proporción y object-contain muestra la imagen completa.
+                        */}
+                        <div className="relative aspect-[1890/860] w-full">
+                          <Image
+                            src={image}
+                            alt={`${activeWork.name} captura ${idx + 1}`}
+                            fill
+                            className="object-contain object-center"
+                            sizes="(max-width: 768px) 100vw, 896px"
+                            priority={idx === 0}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              <button
-                type="button"
-                onClick={() => scrollCarousel('left')}
-                className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/55 p-2 text-white/90"
-                aria-label="Desplazar a la izquierda"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollCarousel('right')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/55 p-2 text-white/90"
-                aria-label="Desplazar a la derecha"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
+                <button
+                  type="button"
+                  onClick={() => scrollCarousel('left')}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/55 p-2 text-white/90"
+                  aria-label="Desplazar a la izquierda"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollCarousel('right')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/55 p-2 text-white/90"
+                  aria-label="Desplazar a la derecha"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            )}
           </motion.div>
         ) : null}
       </AnimatePresence>

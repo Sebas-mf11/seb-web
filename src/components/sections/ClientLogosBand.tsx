@@ -7,7 +7,7 @@ const clients = [
   { name: 'LuxCar Club' },
   { name: 'The Travel Hub' },
   { name: 'Wilor Comercial' },
-  { name: 'Flower of the Forest' },
+  { name: 'Outlet Electro & Hogar' },
 ]
 
 export default function ClientLogosBand() {

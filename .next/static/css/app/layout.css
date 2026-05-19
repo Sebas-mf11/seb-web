@@ -1316,6 +1316,9 @@ video {
 .hidden {
   display: none;
 }
+.aspect-\[1024\/380\] {
+  aspect-ratio: 1024/380;
+}
 .aspect-\[1890\/860\] {
   aspect-ratio: 1890/860;
 }
