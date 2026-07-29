@@ -1,0 +1,793 @@
+/* =============================================================================
+   components.css — Piezas reutilizables del CMS
+   Cada componente es independiente del módulo que lo use (productos, marcas...).
+   ============================================================================= */
+
+/* ---------- Botones ------------------------------------------------------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.62rem 1.05rem;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--t-fast), border-color var(--t-fast),
+    color var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+.btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn--primary {
+  background: var(--c-accent);
+  color: var(--c-accent-contrast);
+  box-shadow: var(--sh-sm);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--c-accent-strong);
+  box-shadow: var(--sh-md);
+}
+
+.btn--ghost {
+  background: var(--c-surface);
+  border-color: var(--c-border);
+  color: var(--c-text-soft);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  border-color: var(--c-border-strong);
+  color: var(--c-text);
+}
+
+.btn--subtle {
+  color: var(--c-text-soft);
+}
+
+.btn--subtle:hover:not(:disabled) {
+  background: var(--c-surface-3);
+  color: var(--c-text);
+}
+
+.btn--danger {
+  background: var(--c-danger-soft);
+  color: var(--c-danger);
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--c-danger);
+  color: #fff;
+}
+
+.btn--danger-strong {
+  background: var(--c-danger);
+  color: #fff;
+  box-shadow: var(--sh-sm);
+}
+
+.btn--danger-strong:hover:not(:disabled) {
+  background: #b91c1c;
+  box-shadow: var(--sh-md);
+}
+
+/* Botón cuadrado solo con icono (acciones de fila) */
+.btn--icon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: var(--r-sm);
+  color: var(--c-text-muted);
+}
+
+.btn--icon:hover:not(:disabled) {
+  background: var(--c-surface-3);
+  color: var(--c-text);
+}
+
+.btn--icon.is-danger:hover:not(:disabled) {
+  background: var(--c-danger-soft);
+  color: var(--c-danger);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--lg {
+  padding: 0.78rem 1.25rem;
+  font-size: 0.925rem;
+}
+
+/* Estado de carga: el texto se oculta y aparece un spinner centrado */
+.btn.is-loading {
+  cursor: progress;
+  color: transparent !important;
+}
+
+.btn.is-loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  color: var(--c-accent-contrast);
+  animation: spin 0.6s linear infinite;
+}
+
+.btn--ghost.is-loading::after,
+.btn--subtle.is-loading::after {
+  color: var(--c-text-soft);
+}
+
+/* ---------- Campos de formulario ------------------------------------------ */
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field__label {
+  color: var(--c-text-soft);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 0.68rem 0.85rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-md);
+  font-size: 0.9rem;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast),
+    background var(--t-fast);
+}
+
+.input::placeholder {
+  color: var(--c-text-muted);
+}
+
+.input:hover:not(:disabled) {
+  border-color: #c2c8d2;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-soft);
+}
+
+.input:disabled {
+  background: var(--c-surface-3);
+  cursor: not-allowed;
+}
+
+.input--with-action {
+  padding-right: 2.9rem;
+}
+
+.field__action {
+  position: absolute;
+  right: 0.35rem;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-sm);
+  color: var(--c-text-muted);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.field__action:hover {
+  background: var(--c-surface-3);
+  color: var(--c-text);
+}
+
+.field__action svg {
+  width: 17px;
+  height: 17px;
+}
+
+.field__hint {
+  color: var(--c-text-muted);
+  font-size: 0.78rem;
+}
+
+/* ---------- Alerta en línea ----------------------------------------------- */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--r-md);
+  font-size: 0.85rem;
+  animation: fade-in var(--t-base);
+}
+
+.alert svg {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  margin-top: 1px;
+}
+
+.alert--danger {
+  background: var(--c-danger-soft);
+  color: var(--c-danger);
+}
+
+.alert--warning {
+  background: var(--c-warning-soft);
+  color: var(--c-warning);
+}
+
+.alert--info {
+  background: var(--c-info-soft);
+  color: var(--c-info);
+}
+
+/* ---------- Tarjetas ------------------------------------------------------ */
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-xs);
+}
+
+.card__body {
+  padding: 1.25rem;
+}
+
+/* Tarjeta de métrica del dashboard */
+.stat {
+  position: relative;
+  padding: 1.25rem;
+  overflow: hidden;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-xs);
+  transition: transform var(--t-base), box-shadow var(--t-base),
+    border-color var(--t-base);
+}
+
+.stat:hover {
+  transform: translateY(-2px);
+  border-color: var(--c-border-strong);
+  box-shadow: var(--sh-md);
+}
+
+.stat__top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stat__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: var(--c-surface-3);
+  color: var(--c-text-soft);
+}
+
+.stat__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.stat__label {
+  color: var(--c-text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.stat__value {
+  margin-top: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.stat__meta {
+  margin-top: 0.4rem;
+  color: var(--c-text-muted);
+  font-size: 0.78rem;
+}
+
+/* ---------- Tabla --------------------------------------------------------- */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 560px;
+  font-size: 0.875rem;
+}
+
+/* Tablas con muchas columnas: fuerzan scroll horizontal antes de apretujarse */
+.table--wide {
+  min-width: 900px;
+}
+
+.table thead th {
+  padding: 0.7rem 1.25rem;
+  background: var(--c-surface-2);
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--c-border);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr {
+  transition: background var(--t-fast);
+}
+
+.table tbody tr:hover {
+  background: var(--c-surface-2);
+}
+
+.table__primary {
+  font-weight: 550;
+}
+
+.table__sub {
+  color: var(--c-text-muted);
+  font-size: 0.78rem;
+}
+
+.table__num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.table__right {
+  text-align: right;
+}
+
+/* Celda de texto largo: una sola línea con puntos suspensivos */
+.cell-clamp {
+  display: block;
+  max-width: 420px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Badges -------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-full);
+  background: var(--c-surface-3);
+  color: var(--c-text-soft);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge--success {
+  background: var(--c-success-soft);
+  color: var(--c-success);
+}
+
+.badge--danger {
+  background: var(--c-danger-soft);
+  /* Un tono más oscuro que --c-danger: el badge es texto pequeño sobre color */
+  color: #b91c1c;
+}
+
+.badge--neutral {
+  background: var(--c-surface-3);
+  color: var(--c-text-muted);
+}
+
+/* ---------- Avatar / usuario ---------------------------------------------- */
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--r-md);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  color: var(--c-accent-contrast);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.user-chip__meta {
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.user-chip__name {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.user-chip__role {
+  display: block;
+  color: var(--c-text-muted);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 640px) {
+  .user-chip__meta {
+    display: none;
+  }
+}
+
+/* ---------- Estado vacío -------------------------------------------------- */
+.empty {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.empty__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 0.4rem;
+  border-radius: var(--r-md);
+  background: var(--c-surface-3);
+  color: var(--c-text-muted);
+}
+
+.empty__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.empty__text {
+  max-width: 38ch;
+  color: var(--c-text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Esqueletos de carga ------------------------------------------- */
+.skeleton {
+  border-radius: var(--r-sm);
+  background: linear-gradient(
+    90deg,
+    var(--c-surface-3) 25%,
+    #eaecf0 37%,
+    var(--c-surface-3) 63%
+  );
+  background-size: 840px 100%;
+  animation: shimmer 1.35s linear infinite;
+}
+
+.skeleton--text {
+  height: 12px;
+}
+
+.skeleton--value {
+  width: 64px;
+  height: 30px;
+  margin-top: 0.9rem;
+}
+
+/* ---------- Spinner ------------------------------------------------------- */
+.spinner {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  border: 2.5px solid var(--c-border-strong);
+  border-top-color: var(--c-accent);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+/* ---------- Toasts -------------------------------------------------------- */
+.toasts {
+  position: fixed;
+  right: 1.15rem;
+  bottom: 1.15rem;
+  z-index: 100;
+  display: grid;
+  gap: 0.6rem;
+  width: min(340px, calc(100vw - 2.3rem));
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.8rem 0.95rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-text-muted);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-lg);
+  font-size: 0.865rem;
+  animation: fade-up var(--t-base) both;
+}
+
+.toast.is-leaving {
+  animation: fade-in var(--t-base) reverse both;
+}
+
+.toast svg {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  margin-top: 1px;
+}
+
+.toast--success {
+  border-left-color: var(--c-success);
+}
+
+.toast--success svg {
+  color: var(--c-success);
+}
+
+.toast--error {
+  border-left-color: var(--c-danger);
+}
+
+.toast--error svg {
+  color: var(--c-danger);
+}
+
+.toast--info {
+  border-left-color: var(--c-info);
+}
+
+.toast--info svg {
+  color: var(--c-info);
+}
+
+/* ---------- Barra de herramientas (búsqueda + acciones) ------------------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+
+.search {
+  position: relative;
+  flex: 1;
+  max-width: 420px;
+}
+
+.search svg {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  width: 17px;
+  height: 17px;
+  color: var(--c-text-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.search .input {
+  padding-left: 2.35rem;
+}
+
+.toolbar__count {
+  color: var(--c-text-muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .search {
+    max-width: none;
+  }
+
+  .toolbar__count {
+    order: 3;
+    width: 100%;
+  }
+}
+
+/* ---------- Miniatura en tabla -------------------------------------------- */
+.thumb {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+  background: var(--c-surface-3);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  color: var(--c-text-muted);
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Acciones al final de cada fila */
+.row-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+/* ---------- Paginación ---------------------------------------------------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--c-border);
+}
+
+.pagination__info {
+  color: var(--c-text-muted);
+  font-size: 0.82rem;
+}
+
+.pagination__nav {
+  display: flex;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+/* ---------- Modal de confirmación ----------------------------------------- */
+.modal {
+  max-width: min(420px, calc(100vw - 2rem));
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-lg);
+  animation: fade-up var(--t-base) both;
+}
+
+.modal::backdrop {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.modal__box {
+  padding: 1.5rem;
+  background: var(--c-surface);
+  color: var(--c-text);
+}
+
+.modal__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 0.9rem;
+  border-radius: var(--r-md);
+}
+
+.modal__icon--danger {
+  background: var(--c-danger-soft);
+  color: var(--c-danger);
+}
+
+.modal__icon--primary {
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+}
+
+.modal__title {
+  font-size: 1.05rem;
+}
+
+.modal__text {
+  margin-top: 0.4rem;
+  color: var(--c-text-soft);
+  font-size: 0.9rem;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Pantalla de error bloqueante ---------------------------------- */
+.fatal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: var(--c-bg);
+  animation: fade-in var(--t-base);
+}
+
+.fatal__box {
+  width: min(480px, 100%);
+  padding: 2rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-md);
+  text-align: center;
+}
+
+.fatal__box h2 {
+  margin-bottom: 0.6rem;
+  font-size: 1.15rem;
+}
+
+.fatal__box p {
+  color: var(--c-text-soft);
+  font-size: 0.9rem;
+}
+
+.fatal__box code {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--c-surface-3);
+  border-radius: var(--r-sm);
+  font-size: 0.82rem;
+}

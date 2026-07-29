@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Producto · Commerce CMS</title>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Unbounded:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body class="is-booting">
+    <div class="boot" role="status" aria-label="Cargando">
+      <span class="spinner"></span>
+    </div>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar"></aside>
+      <div class="sidebar-backdrop" data-sidebar-close></div>
+
+      <div class="main">
+        <header class="topbar" id="topbar"></header>
+
+        <main class="content">
+          <form id="product-form" novalidate>
+            <div id="form-alert" hidden style="margin-bottom: 1.1rem"></div>
+
+            <div class="form-layout">
+              <!-- Columna principal -->
+              <div class="form-column">
+                <section class="form-card" style="--i: 0">
+                  <h2 class="form-card__title">Información del producto</h2>
+                  <p class="form-card__hint">
+                    Los datos que verá tu cliente en la tienda.
+                  </p>
+
+                  <div class="form-card__body">
+                    <div class="field">
+                      <label class="field__label" for="name">Nombre *</label>
+                      <input
+                        class="input"
+                        type="text"
+                        id="name"
+                        maxlength="160"
+                        placeholder="Nevera No Frost 320 L"
+                        required
+                      />
+                    </div>
+
+                    <div class="field-row">
+                      <div class="field">
+                        <label class="field__label" for="reference">Referencia</label>
+                        <input
+                          class="input"
+                          type="text"
+                          id="reference"
+                          maxlength="80"
+                          placeholder="RF-320-INX"
+                        />
+                      </div>
+
+                      <div class="field">
+                        <label class="field__label" for="price">Precio *</label>
+                        <input
+                          class="input"
+                          type="text"
+                          id="price"
+                          inputmode="decimal"
+                          placeholder="1250000"
+                          required
+                        />
+                        <span class="field__hint">Solo el número, sin puntos ni símbolos.</span>
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="description">Descripción</label>
+                      <textarea
+                        class="input textarea"
+                        id="description"
+                        maxlength="4000"
+                        placeholder="Características, medidas, garantía…"
+                      ></textarea>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="form-card" style="--i: 1">
+                  <h2 class="form-card__title">Imágenes</h2>
+                  <p class="form-card__hint">
+                    La primera es la principal: es la que aparece en el catálogo.
+                  </p>
+
+                  <div class="form-card__body">
+                    <label class="dropzone" id="dropzone">
+                      <span class="dropzone__icon" data-icon="upload" data-icon-size="22"></span>
+                      <span class="dropzone__title">
+                        Arrastra tus imágenes o haz clic para elegirlas
+                      </span>
+                      <span class="dropzone__hint" id="dropzone-hint">
+                        JPG, PNG, WebP o AVIF
+                      </span>
+                      <input type="file" id="images" accept="image/*" multiple />
+                    </label>
+
+                    <div class="media-grid" id="media-grid"></div>
+                  </div>
+                </section>
+              </div>
+
+              <!-- Columna lateral -->
+              <div class="form-column">
+                <section class="form-card" style="--i: 2">
+                  <h2 class="form-card__title">Organización</h2>
+
+                  <div class="form-card__body">
+                    <div class="field">
+                      <label class="field__label" for="brand">Marca</label>
+                      <select class="select" id="brand">
+                        <option value="">Cargando…</option>
+                      </select>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="category">Categoría</label>
+                      <select class="select" id="category">
+                        <option value="">Cargando…</option>
+                      </select>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="form-card" style="--i: 3">
+                  <h2 class="form-card__title">Estado</h2>
+
+                  <div class="form-card__body">
+                    <div class="field">
+                      <span class="field__label">Condición</span>
+                      <div class="segmented" role="radiogroup" aria-label="Condición">
+                        <span class="segmented__option">
+                          <input type="radio" name="condition" id="condition-a" value="Tipo A" checked />
+                          <label class="segmented__label" for="condition-a">Tipo A</label>
+                        </span>
+                        <span class="segmented__option">
+                          <input type="radio" name="condition" id="condition-b" value="Tipo B" />
+                          <label class="segmented__label" for="condition-b">Tipo B</label>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <span class="field__label">Disponibilidad</span>
+                      <label class="switch">
+                        <input type="checkbox" id="available" checked />
+                        <span class="switch__track"></span>
+                        <span class="switch__text">
+                          Disponible
+                          <span class="switch__state" id="available-state">
+                            Se muestra en la tienda
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <a class="btn btn--ghost form-actions__spacer" href="products.html">Cancelar</a>
+              <button class="btn btn--primary" type="submit" id="submit">
+                Guardar producto
+              </button>
+            </div>
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="js/product-form.js"></script>
+  </body>
+</html>

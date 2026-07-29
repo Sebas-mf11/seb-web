@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Panel privado: nunca debe aparecer en buscadores. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Iniciar sesión · Commerce CMS</title>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Unbounded:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body class="is-booting">
+    <!-- Cubre la pantalla mientras se comprueba si ya hay sesión activa -->
+    <div class="boot" role="status" aria-label="Cargando">
+      <span class="spinner"></span>
+    </div>
+
+    <div class="auth">
+      <!-- Panel de marca de la plataforma -->
+      <aside class="auth__brand">
+        <div class="auth__logo">
+          <span class="auth__logo-mark" aria-hidden="true">S</span>
+          <span data-brand="app-name">Commerce CMS</span>
+        </div>
+
+        <div class="auth__pitch">
+          <h1>Tu catálogo, bajo control.</h1>
+          <p>
+            Publica productos, precios e imágenes en minutos. Sin depender de
+            nadie y sin tocar una línea de código.
+          </p>
+
+          <ul class="auth__points">
+            <li class="auth__point">
+              <span data-icon="box" data-icon-size="18"></span>
+              Productos, categorías y marcas en un solo lugar
+            </li>
+            <li class="auth__point">
+              <span data-icon="image" data-icon-size="18"></span>
+              Imágenes optimizadas y alojadas de forma segura
+            </li>
+            <li class="auth__point">
+              <span data-icon="shield" data-icon-size="18"></span>
+              Acceso privado y protegido con tu propia cuenta
+            </li>
+          </ul>
+        </div>
+
+        <p class="auth__legal">
+          Plataforma desarrollada por
+          <a data-brand="vendor-url" href="https://sebweb.co" target="_blank" rel="noopener">
+            <span data-brand="vendor-name">SEB</span>
+          </a>
+        </p>
+      </aside>
+
+      <!-- Formulario -->
+      <main class="auth__panel">
+        <div class="auth__form-wrap">
+          <h2 class="auth__title">Iniciar sesión</h2>
+          <p class="auth__subtitle">
+            Accede con el correo y la contraseña que te entregamos.
+          </p>
+
+          <form class="auth__form" id="login-form" novalidate>
+            <div id="login-alert" hidden></div>
+
+            <div class="field">
+              <label class="field__label" for="email">Correo electrónico</label>
+              <div class="field__control">
+                <input
+                  class="input"
+                  type="email"
+                  id="email"
+                  name="email"
+                  autocomplete="username"
+                  placeholder="tucorreo@dominio.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="password">Contraseña</label>
+              <div class="field__control">
+                <input
+                  class="input input--with-action"
+                  type="password"
+                  id="password"
+                  name="password"
+                  autocomplete="current-password"
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  class="field__action"
+                  type="button"
+                  id="toggle-password"
+                  aria-label="Mostrar contraseña"
+                  data-icon="eye"
+                  data-icon-size="17"
+                ></button>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg btn--block" type="submit" id="login-submit">
+              Entrar al panel
+            </button>
+          </form>
+
+          <p class="auth__footnote">
+            ¿Problemas para entrar? Contacta al administrador de tu sitio.
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="js/login.js"></script>
+  </body>
+</html>

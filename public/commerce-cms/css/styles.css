@@ -1,0 +1,10 @@
+/* =============================================================================
+   styles.css — Punto de entrada único de estilos.
+   Las páginas solo enlazan este archivo; el orden de import importa:
+   tokens/reset -> estructura -> componentes.
+   ============================================================================= */
+
+@import url('./base.css');
+@import url('./layout.css');
+@import url('./components.css');
+@import url('./forms.css');

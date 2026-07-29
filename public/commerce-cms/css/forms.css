@@ -1,0 +1,367 @@
+/* =============================================================================
+   forms.css — Controles de formulario y gestor de imágenes.
+   Se separa de components.css porque es un bloque grande y cohesivo, usado
+   solo por las pantallas de alta y edición.
+   ============================================================================= */
+
+/* ---------- Estructura del formulario ------------------------------------- */
+.form-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  align-items: start;
+  gap: 1.25rem;
+}
+
+.form-column {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.form-card {
+  padding: 1.35rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-xs);
+  animation: fade-up var(--t-slow) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+.form-card__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.form-card__hint {
+  margin-top: 0.2rem;
+  color: var(--c-text-muted);
+  font-size: 0.8rem;
+}
+
+.form-card__body {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1.15rem;
+}
+
+/* Dos campos cortos en la misma línea */
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.1rem;
+}
+
+@media (max-width: 980px) {
+  .form-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Select y textarea --------------------------------------------- */
+.select {
+  width: 100%;
+  padding: 0.68rem 2.2rem 0.68rem 0.85rem;
+  background-color: var(--c-surface);
+  /* Flecha dibujada en el propio fondo: sin imágenes ni dependencias. */
+  background-image: linear-gradient(45deg, transparent 50%, var(--c-text-muted) 50%),
+    linear-gradient(135deg, var(--c-text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 52%, calc(100% - 12px) 52%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-md);
+  font-size: 0.9rem;
+  appearance: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-soft);
+}
+
+.textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Dentro de un diálogo el alto completo sobra */
+.textarea--compact {
+  min-height: 84px;
+}
+
+/* Campos de un formulario en diálogo */
+.modal__fields {
+  display: grid;
+  gap: 1rem;
+}
+
+/* ---------- Selector de dos opciones (Condición) -------------------------- */
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.3rem;
+  padding: 0.28rem;
+  background: var(--c-surface-3);
+  border-radius: var(--r-md);
+}
+
+.segmented__option {
+  position: relative;
+}
+
+.segmented__option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented__label {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: calc(var(--r-md) - 3px);
+  color: var(--c-text-soft);
+  font-size: 0.86rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.segmented__label:hover {
+  color: var(--c-text);
+}
+
+.segmented__option input:checked + .segmented__label {
+  background: var(--c-surface);
+  color: var(--c-text);
+  box-shadow: var(--sh-sm);
+}
+
+.segmented__option input:focus-visible + .segmented__label {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 1px;
+}
+
+/* ---------- Interruptor (Disponible) -------------------------------------- */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switch__track {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 25px;
+  background: #cbd2dc;
+  border-radius: var(--r-full);
+  transition: background var(--t-base);
+}
+
+.switch__track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 19px;
+  height: 19px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: var(--sh-sm);
+  transition: transform var(--t-base);
+}
+
+.switch input:checked + .switch__track {
+  background: var(--c-success);
+}
+
+.switch input:checked + .switch__track::after {
+  transform: translateX(19px);
+}
+
+.switch input:focus-visible + .switch__track {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+.switch__text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.switch__state {
+  display: block;
+  color: var(--c-text-muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+/* ---------- Zona de subida de imágenes ------------------------------------ */
+.dropzone {
+  display: grid;
+  place-items: center;
+  gap: 0.3rem;
+  padding: 1.75rem 1rem;
+  background: var(--c-surface-2);
+  border: 1.5px dashed var(--c-border-strong);
+  border-radius: var(--r-md);
+  color: var(--c-text-muted);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast);
+}
+
+.dropzone:hover,
+.dropzone.is-over {
+  background: var(--c-accent-soft);
+  border-color: var(--c-accent);
+  color: var(--c-text);
+}
+
+.dropzone__icon {
+  color: var(--c-text-muted);
+}
+
+.dropzone__title {
+  color: var(--c-text);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.dropzone__hint {
+  font-size: 0.78rem;
+}
+
+.dropzone input[type='file'] {
+  display: none;
+}
+
+/* ---------- Galería de imágenes del producto ------------------------------ */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.media-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--c-surface-3);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  animation: fade-in var(--t-base);
+}
+
+.media-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-item.is-main {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 2px var(--c-accent-soft);
+}
+
+.media-item__badge {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--r-full);
+  background: var(--c-accent);
+  color: var(--c-accent-contrast);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.media-item__tools {
+  position: absolute;
+  right: 0.35rem;
+  bottom: 0.35rem;
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--t-fast), transform var(--t-fast);
+}
+
+.media-item:hover .media-item__tools,
+.media-item:focus-within .media-item__tools {
+  opacity: 1;
+  transform: none;
+}
+
+.media-item__btn {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: var(--r-sm);
+  box-shadow: var(--sh-sm);
+  color: var(--c-text-soft);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.media-item__btn:hover {
+  background: #fff;
+  color: var(--c-text);
+}
+
+.media-item__btn.is-danger:hover {
+  background: var(--c-danger);
+  color: #fff;
+}
+
+.media-item__btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Marca de agua para las imágenes aún no guardadas */
+.media-item.is-pending::before {
+  content: 'Nueva';
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  z-index: 1;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--r-full);
+  background: rgba(15, 23, 42, 0.72);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+/* ---------- Barra de acciones del formulario ------------------------------ */
+.form-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+  padding: 0.9rem 0;
+  background: linear-gradient(to top, var(--c-bg) 72%, transparent);
+}
+
+.form-actions__spacer {
+  margin-left: auto;
+}

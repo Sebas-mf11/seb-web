@@ -15,6 +15,19 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // El CMS es una app estática en /public/commerce-cms. Sin esto, la URL
+      // corta daría 404 y habría que compartir el enlace con "/index.html".
+      // Se usa redirect (no rewrite) para que la ruta base del navegador
+      // conserve la carpeta y las rutas relativas del panel sigan resolviendo.
+      {
+        source: '/commerce-cms',
+        destination: '/commerce-cms/index.html',
+        permanent: false,
+      },
+    ]
+  },
   async headers() {
     return [
       {
@@ -27,6 +40,11 @@ const nextConfig = {
             value: 'strict-origin-when-cross-origin',
           },
         ],
+      },
+      {
+        // El panel privado no debe indexarse aunque alguien enlace la URL.
+        source: '/commerce-cms/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
     ]
   },

@@ -1,0 +1,233 @@
+/* =============================================================================
+   base.css — Reset, design tokens y utilidades
+   Todo el sistema visual del CMS sale de las variables de :root.
+   Cambiar la marca de un cliente = cambiar esas variables (ver config.js).
+   ============================================================================= */
+
+/* ---------- Design tokens ------------------------------------------------- */
+:root {
+  /* Superficies y texto */
+  --c-bg: #f6f7f9;
+  --c-surface: #ffffff;
+  --c-surface-2: #fafafa;
+  --c-surface-3: #f2f4f7;
+  --c-border: #e6e8ec;
+  --c-border-strong: #d5d9e0;
+  --c-text: #0f172a;
+  --c-text-soft: #475569;
+  /* 4.8:1 sobre las superficies claras: legible para texto pequeño (WCAG AA) */
+  --c-text-muted: #6b7280;
+
+  /* Marca (sobrescritas en runtime por applyBranding) */
+  --c-accent: #111827;
+  --c-accent-strong: #0b1220;
+  --c-accent-contrast: #ffffff;
+  --c-accent-soft: #eef1f6;
+
+  /* Estados */
+  --c-success: #15803d;
+  --c-success-soft: #e8f6ee;
+  --c-danger: #dc2626;
+  --c-danger-soft: #fdeced;
+  --c-warning: #b45309;
+  --c-warning-soft: #fdf3e3;
+  --c-info: #2563eb;
+  --c-info-soft: #eaf1fe;
+
+  /* Radios */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-full: 999px;
+
+  /* Sombras — suaves, nunca duras */
+  --sh-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --sh-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --sh-md: 0 4px 16px rgba(15, 23, 42, 0.07);
+  --sh-lg: 0 18px 48px rgba(15, 23, 42, 0.12);
+
+  /* Movimiento */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 140ms var(--ease);
+  --t-base: 220ms var(--ease);
+  --t-slow: 420ms var(--ease);
+
+  /* Métricas del shell */
+  --sidebar-w: 264px;
+  --topbar-h: 72px;
+  --content-max: 1240px;
+
+  /* Tipografías */
+  --font-ui: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, sans-serif;
+  --font-display: 'Unbounded', var(--font-ui);
+}
+
+/* ---------- Reset --------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100svh;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+/* ---------- Accesibilidad ------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Utilidades ---------------------------------------------------- */
+.u-muted {
+  color: var(--c-text-muted);
+}
+
+.u-soft {
+  color: var(--c-text-soft);
+}
+
+.u-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.u-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.u-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ---------- Animaciones --------------------------------------------------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -420px 0;
+  }
+  to {
+    background-position: 420px 0;
+  }
+}
+
+/* Entrada escalonada: se aplica con --i (índice) desde el HTML/JS */
+.anim-in {
+  animation: fade-up var(--t-slow) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

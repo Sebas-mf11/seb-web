@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Dashboard · Commerce CMS</title>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Unbounded:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body class="is-booting">
+    <!-- Se mantiene visible hasta confirmar la sesión: evita mostrar datos
+         privados durante un instante a quien no ha iniciado sesión. -->
+    <div class="boot" role="status" aria-label="Cargando">
+      <span class="spinner"></span>
+    </div>
+
+    <div class="app-shell">
+      <!-- Sidebar y barra superior los construye js/ui/layout.js -->
+      <aside class="sidebar" id="sidebar"></aside>
+      <div class="sidebar-backdrop" data-sidebar-close></div>
+
+      <div class="main">
+        <header class="topbar" id="topbar"></header>
+
+        <main class="content">
+          <section class="page-intro">
+            <h2 class="page-intro__title u-display" id="greeting">Hola.</h2>
+            <p class="page-intro__text">Este es el estado actual de tu catálogo.</p>
+          </section>
+
+          <!-- Tarjetas de métricas -->
+          <section class="grid-stats" id="stats" aria-label="Resumen del catálogo"></section>
+
+          <!-- Últimos productos -->
+          <section class="section">
+            <div class="section__head">
+              <h3 class="section__title">Últimos productos agregados</h3>
+              <span class="badge badge--neutral">Los 5 más recientes</span>
+            </div>
+
+            <div class="card">
+              <div class="table-wrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Referencia</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col" class="table__right">Agregado</th>
+                    </tr>
+                  </thead>
+                  <tbody id="latest-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+  </body>
+</html>

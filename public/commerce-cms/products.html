@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Productos · Commerce CMS</title>
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Unbounded:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body class="is-booting">
+    <div class="boot" role="status" aria-label="Cargando">
+      <span class="spinner"></span>
+    </div>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar"></aside>
+      <div class="sidebar-backdrop" data-sidebar-close></div>
+
+      <div class="main">
+        <header class="topbar" id="topbar"></header>
+
+        <main class="content">
+          <div class="toolbar">
+            <div class="search">
+              <span data-icon="search" data-icon-size="17"></span>
+              <label class="sr-only" for="search">Buscar productos</label>
+              <input
+                class="input"
+                type="search"
+                id="search"
+                placeholder="Buscar por nombre, referencia o marca…"
+                autocomplete="off"
+              />
+            </div>
+
+            <span class="toolbar__count" id="result-count"></span>
+
+            <a class="btn btn--primary" href="product-form.html">
+              <span data-icon="plus" data-icon-size="17"></span>
+              Nuevo producto
+            </a>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table class="table table--wide">
+                <thead>
+                  <tr>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Disponible</th>
+                    <th scope="col">Creado</th>
+                    <th scope="col" class="table__right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="products-body"></tbody>
+              </table>
+            </div>
+
+            <div class="pagination" id="pagination" hidden></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="js/products.js"></script>
+  </body>
+</html>
