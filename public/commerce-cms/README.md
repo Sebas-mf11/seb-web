@@ -7,7 +7,7 @@ sin build, sin dependencias que instalar.**
 Vive dentro de `public/`, así que Next.js lo sirve tal cual:
 
 - Local: <http://localhost:3000/commerce-cms>
-- Producción: `https://sebweb.co/commerce-cms`
+- Producción: <https://seb-web.pages.dev/commerce-cms>
 
 No comparte código, dependencias ni build con el sitio: es una carpeta
 autocontenida que se puede copiar a cualquier proyecto o desplegar sola.

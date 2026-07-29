@@ -173,9 +173,9 @@ falta una tabla de perfiles y políticas RLS por rol.
 6. **El repositorio contiene la URL y la clave pública de Supabase.** Son
    públicas por diseño y RLS las contiene, pero si el repo es público conviene
    saberlo. Lo que nunca debe entrar al repo es la `service_role`.
-7. **Verificar tras el deploy** que `sebweb.co/commerce-cms` redirige bien y
-   responde con la cabecera `X-Robots-Tag: noindex` (ambas configuradas en
-   `next.config.mjs`; probadas en local, conviene reconfirmar en Cloudflare).
+7. **Verificado tras el deploy**: `seb-web.pages.dev/commerce-cms` redirige a
+   su `index.html`, las 6 páginas responden 200 en Cloudflare Pages y la
+   cabecera `X-Robots-Tag: noindex, nofollow` se aplica correctamente.
 8. **Copias de seguridad.** El plan gratuito de Supabase no incluye
    point-in-time recovery. Programar un respaldo periódico de las 4 tablas
    antes de que el cliente cargue el catálogo real.
