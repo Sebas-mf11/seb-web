@@ -21,6 +21,7 @@ import {
   withEmbedFallback,
 } from './repository.js';
 import { listBrands } from './brands.service.js';
+import { slugify } from '../core/format.js';
 import {
   oneOf,
   optionalId,
@@ -35,7 +36,7 @@ const TABLE = 'products';
 
 /** Columnas propias de la tabla. */
 const BASE_COLUMNS =
-  'id, name, reference, description, price, condition, available, category_id, brand_id, created_at';
+  'id, name, slug, reference, description, price, condition, available, category_id, brand_id, created_at';
 
 /**
  * Con marca, categoría e imágenes en la misma petición.
@@ -50,6 +51,9 @@ const SEARCH_COLUMNS = ['name', 'reference', 'description'];
 
 /** Cuántas marcas como máximo entran en el filtro de búsqueda por marca. */
 const BRAND_MATCH_LIMIT = 50;
+
+/** Cuántos slugs de la misma familia se traen para buscar uno libre. */
+const SLUG_LOOKUP_LIMIT = 200;
 
 /** Valores admitidos en la columna `condition`. */
 export const PRODUCT_CONDITIONS = ['Tipo A', 'Tipo B'];
@@ -173,13 +177,16 @@ export function countProducts() {
  * @param {object} input - datos crudos del formulario.
  */
 export async function createProduct(input) {
-  const row = await insertOne(TABLE, toRecord(input));
+  const row = await insertOne(TABLE, await toRecord(input));
   return normalize(row);
 }
 
 /** Actualiza un producto existente. */
 export async function updateProduct(id, input) {
-  const row = await updateById(TABLE, requiredId(id, 'producto'), toRecord(input));
+  const productId = requiredId(id, 'producto');
+  const record = await toRecord(input, { currentId: productId });
+
+  const row = await updateById(TABLE, productId, record);
   return normalize(row);
 }
 
@@ -196,10 +203,20 @@ export function deleteProduct(id) {
 
 /* ------------------------------------------------------------------ mapeo */
 
-/** Formulario -> fila de la base de datos (valida por el camino). */
-function toRecord(input) {
+/**
+ * Formulario -> fila de la base de datos (valida por el camino).
+ * Es asíncrona porque el slug necesita consultar los ya ocupados.
+ *
+ * @param {object} input
+ * @param {{currentId?: string|number|null}} [options] - id del producto que se
+ *        está editando, para que su propio slug no cuente como ocupado.
+ */
+async function toRecord(input, { currentId = null } = {}) {
+  const name = requiredText(input.name, { field: 'Nombre', max: 160 });
+
   const record = {
-    name: requiredText(input.name, { field: 'Nombre', max: 160 }),
+    name,
+    slug: await resolveSlug({ desired: input.slug, name, currentId }),
     reference: optionalText(input.reference, { field: 'Referencia', max: 80 }),
     description: optionalText(input.description, { field: 'Descripción', max: 4000 }),
     price: requiredPrice(input.price),
@@ -217,11 +234,65 @@ function toRecord(input) {
   return record;
 }
 
+/**
+ * Decide el slug definitivo del producto.
+ *
+ * Prioridad: lo que el cliente escribió a mano; si lo dejó vacío, el nombre.
+ * El texto se normaliza siempre (aunque venga escrito a mano) para que nunca
+ * llegue a la URL pública un espacio, una tilde o un signo raro.
+ *
+ * @param {{desired?: string, name: string, currentId: string|number|null}} args
+ * @returns {Promise<string>}
+ */
+async function resolveSlug({ desired, name, currentId }) {
+  const base = slugify(desired) || slugify(name) || 'producto';
+  return findFreeSlug(base, currentId);
+}
+
+/**
+ * Busca el primer slug libre a partir de una base: `nevera`, `nevera-2`,
+ * `nevera-3`…
+ *
+ * Se piden de una sola vez todos los slugs que empiezan por la base y se
+ * decide en memoria, en lugar de consultar una vez por candidato.
+ *
+ * Esto resuelve los choques del día a día; la garantía dura la da el índice
+ * único de la base de datos (ver `supabase/migrations/`), que además cubre el
+ * caso de dos personas guardando a la vez.
+ */
+async function findFreeSlug(base, currentId) {
+  const rows = await selectMany(TABLE, {
+    columns: 'id, slug',
+    startsWith: { column: 'slug', value: base },
+    orderBy: 'slug',
+    ascending: true,
+    limit: SLUG_LOOKUP_LIMIT,
+  });
+
+  const taken = new Set(
+    rows
+      .filter((row) => String(row.id) !== String(currentId ?? ''))
+      .map((row) => row.slug),
+  );
+
+  if (!taken.has(base)) return base;
+
+  for (let suffix = 2; suffix <= SLUG_LOOKUP_LIMIT; suffix += 1) {
+    const candidate = `${base}-${suffix}`;
+    if (!taken.has(candidate)) return candidate;
+  }
+
+  // Salida de emergencia: con cientos de homónimos, algo irrepetible.
+  return `${base}-${Date.now().toString(36)}`;
+}
+
 /** Fila de la base de datos -> objeto que consume la interfaz. */
 function normalize(row) {
   return {
     id: row.id,
     name: row.name,
+    // Identificador público: es lo que la tienda usa en la URL del producto.
+    slug: row.slug ?? '',
     reference: row.reference ?? '',
     description: row.description ?? '',
     price: row.price,

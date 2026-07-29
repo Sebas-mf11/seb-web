@@ -33,7 +33,8 @@ export async function countRows(tableName) {
  * @param {string} tableName
  * @param {{columns?: string, orderBy?: string, ascending?: boolean,
  *          limit?: number, offset?: number, search?: string,
- *          searchColumns?: string[], filters?: Record<string, unknown>}} [options]
+ *          searchColumns?: string[], filters?: Record<string, unknown>,
+ *          startsWith?: {column: string, value: string}}} [options]
  */
 export async function selectMany(tableName, options = {}) {
   const {
@@ -45,6 +46,7 @@ export async function selectMany(tableName, options = {}) {
     search = '',
     searchColumns = [],
     filters = {},
+    startsWith = null,
   } = options;
 
   let query = db().from(tableName).select(columns);
@@ -54,6 +56,11 @@ export async function selectMany(tableName, options = {}) {
       query = query.eq(column, value);
     }
   });
+
+  // Coincidencia por prefijo (`like 'valor%'`), para buscar familias de slugs.
+  if (startsWith?.value) {
+    query = query.like(startsWith.column, `${startsWith.value}%`);
+  }
 
   const searchFilter = buildSearchFilter(search, searchColumns);
   if (searchFilter) query = query.or(searchFilter);

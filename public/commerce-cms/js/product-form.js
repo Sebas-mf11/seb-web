@@ -35,6 +35,7 @@ import {
 } from './services/storage.service.js';
 import { $, el } from './core/dom.js';
 import { reportError } from './core/errors.js';
+import { slugify } from './core/format.js';
 import { notify, setInlineAlert, setLoading } from './core/ui.js';
 import { icon, paintIcons } from './ui/icons.js';
 
@@ -50,6 +51,12 @@ const state = {
   media: [],
   /** Imágenes ya guardadas que se borrarán al confirmar. */
   removed: [],
+  /**
+   * true cuando el slug lo decide el cliente y deja de seguir al nombre.
+   * Al editar arranca en true: cambiar el enlace de un producto ya publicado
+   * rompe los enlaces compartidos, así que nunca se toca por su cuenta.
+   */
+  slugTouched: isEditing,
   ready: false,
 };
 
@@ -70,6 +77,7 @@ async function main() {
 
   wireImages();
   wireAvailableSwitch();
+  wireSlug();
   wireSubmit();
 
   await loadInitialData();
@@ -119,6 +127,7 @@ function fillSelect(selector, items, emptyLabel) {
 
 function fillForm(product) {
   $('#name').value = product.name ?? '';
+  $('#slug').value = product.slug ?? '';
   $('#reference').value = product.reference ?? '';
   $('#price').value = product.price ?? '';
   $('#description').value = product.description ?? '';
@@ -289,6 +298,41 @@ function removeMedia(index) {
   renderMedia();
 }
 
+/* ------------------------------------------------------------ enlace público */
+
+/**
+ * Al crear, el enlace sigue al nombre mientras el cliente no lo toque.
+ * En cuanto lo edita a mano, manda lo que él escribió.
+ */
+function wireSlug() {
+  const name = $('#name');
+  const slug = $('#slug');
+  if (!name || !slug) return;
+
+  name.addEventListener('input', () => {
+    if (state.slugTouched) return;
+    slug.value = slugify(name.value);
+  });
+
+  slug.addEventListener('input', () => {
+    state.slugTouched = true;
+  });
+
+  // Al salir del campo se normaliza lo escrito: nunca debe llegar a la URL un
+  // espacio ni una tilde. Si lo dejó vacío, vuelve a seguir al nombre.
+  slug.addEventListener('blur', () => {
+    const clean = slugify(slug.value);
+
+    if (!clean) {
+      state.slugTouched = false;
+      slug.value = slugify(name.value);
+      return;
+    }
+
+    slug.value = clean;
+  });
+}
+
 /* ------------------------------------------------------------ disponibilidad */
 
 function wireAvailableSwitch() {
@@ -341,6 +385,7 @@ async function handleSubmit(event) {
 function readForm() {
   return {
     name: $('#name').value,
+    slug: $('#slug').value,
     reference: $('#reference').value,
     description: $('#description').value,
     price: $('#price').value,

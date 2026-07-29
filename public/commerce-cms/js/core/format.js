@@ -68,6 +68,28 @@ export function formatRelative(value) {
   return 'hace un momento';
 }
 
+/**
+ * Convierte un texto en un identificador apto para URL.
+ * "Nevera No Frost 320 L" -> "nevera-no-frost-320-l"
+ *
+ * `normalize('NFD')` separa cada letra de su acento y el rango de combinantes
+ * los elimina, así que "Ñ" y "É" se resuelven solas sin tabla de reemplazos.
+ *
+ * @param {unknown} value
+ * @param {{maxLength?: number}} [options]
+ * @returns {string} cadena vacía si el texto no tiene nada aprovechable.
+ */
+export function slugify(value, { maxLength = 80 } = {}) {
+  return String(value ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, maxLength)
+    .replace(/-+$/, '');
+}
+
 /** Iniciales para el avatar: "sebas@correo.com" -> "SE" */
 export function initials(value) {
   const source = String(value ?? '').trim();

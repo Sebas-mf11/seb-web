@@ -117,9 +117,25 @@ Todos son re-ejecutables: si el cambio ya está aplicado, el script lo detecta,
 no hace nada y no falla. Cada uno termina con una consulta de comprobación que
 muestra cómo quedó la tabla.
 
-| Fecha      | Cambio                                                       |
-| ---------- | ------------------------------------------------------------ |
-| 2026-07-28 | `products`: se elimina `stock` y se añade `available` (bool)  |
+| Fecha      | Cambio                                                                  |
+| ---------- | ----------------------------------------------------------------------- |
+| 2026-07-28 | `products`: se elimina `stock` y se añade `available` (bool)             |
+| 2026-07-28 | `products`: `slug` obligatorio y con índice único (identificador público) |
+
+## Enlace público (slug)
+
+`products.slug` es el identificador con el que la tienda referencia cada
+producto en su URL. El CMS lo trata así:
+
+- **Se genera solo** desde el nombre mientras se crea el producto.
+- **Se puede editar a mano**; lo escrito se normaliza siempre (sin tildes, sin
+  espacios, sin signos), así que a la URL nunca llega algo inválido.
+- **Al editar un producto ya guardado no se regenera**: cambiar el enlace de
+  algo publicado rompe los enlaces compartidos, y eso debe ser una decisión
+  consciente.
+- **Es único** en dos niveles: el servicio busca el primer hueco libre
+  (`nevera`, `nevera-2`, `nevera-3`…) y el índice único de la base de datos
+  cierra la puerta a dos guardados simultáneos.
 
 ## Reglas del proyecto
 
