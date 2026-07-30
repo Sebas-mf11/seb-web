@@ -1,4 +1,4 @@
-# Commerce CMS · v1.0
+# Commerce CMS · v1.1 (multitienda)
 
 Panel de administración de catálogo para tiendas de electrodomésticos.
 HTML, CSS y JavaScript (ES Modules) puros sobre Supabase. **Sin frameworks,

@@ -1,6 +1,7 @@
-# Auditoría de entrega · Commerce CMS v1.0
+# Auditoría de entrega · Commerce CMS
 
 Fecha: 2026-07-28 · Alcance: `public/commerce-cms/` completo
+Actualizado 2026-07-30: modelo de permisos multitienda (v1.1)
 
 ---
 
@@ -161,12 +162,29 @@ Pendiente de comprobación manual:
 5. **Configurar Site URL y Redirect URLs** en Authentication → URL
    Configuration, con el dominio real.
 
-### Modelo de permisos — conviene entenderlo
+### Modelo de permisos — actualizado en la v1.1 (multitienda)
 
-Cualquier usuario autenticado puede escribir en **todas** las tablas. Con un
-único usuario por cliente es correcto y simple. Si algún día hay varios
-usuarios, todos serán administradores totales: para roles diferenciados haría
-falta una tabla de perfiles y políticas RLS por rol.
+`profiles` vincula cada usuario con su tienda y su rol, y las políticas RLS se
+separan por rol de Postgres:
+
+| Rol de Postgres            | SELECT                | Escritura       |
+| -------------------------- | --------------------- | --------------- |
+| `anon` (la web pública)     | Todo el catálogo      | Ninguna         |
+| `authenticated` (`admin`)   | **Solo su tienda**    | Solo su tienda  |
+| `authenticated` (`super_admin`) | Todas             | Todas           |
+
+El aislamiento lo impone la base de datos: manipular las consultas desde el
+navegador no devuelve filas de otra tienda. El filtro por `store_id` de los
+servicios existe porque el super_admin sí ve todas y hay que mostrarle una.
+
+**Límite deliberado:** el rol anónimo lee el catálogo de todas las tiendas. Es
+necesario para que cada web pública funcione sin login y no expone nada que no
+esté ya publicado.
+
+**Storage sigue sin aislar por tienda:** el bucket es público y las políticas
+no distinguen carpetas. Un admin podría, manipulando peticiones, subir o
+borrar archivos de otra tienda. No es explotable desde el panel y no afecta a
+los datos, pero es la siguiente pieza a cerrar si el número de clientes crece.
 
 ### Despliegue
 
