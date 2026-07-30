@@ -33,7 +33,9 @@ estable y barato de mantener.
 1. **Crear el proyecto en Supabase** (uno por cliente: aísla los datos sin
    escribir lógica multi-tenant).
 
-2. **Crear las tablas**: `categories`, `brands`, `products`, `product_images`.
+2. **Crear las tablas**: `stores`, `categories`, `brands`, `products`,
+   `product_images`. Las cuatro últimas llevan `store_id` referenciando a
+   `stores`; `product_images` no, porque hereda la tienda de su producto.
 
 3. **Ejecutar `supabase/schema-rls.sql`** en el SQL Editor de Supabase.
    Activa RLS y crea el bucket de imágenes. **Paso obligatorio**: sin él, la
@@ -121,6 +123,56 @@ muestra cómo quedó la tabla.
 | ---------- | ----------------------------------------------------------------------- |
 | 2026-07-28 | `products`: se elimina `stock` y se añade `available` (bool)             |
 | 2026-07-28 | `products`: `slug` obligatorio y con índice único (identificador público) |
+| 2026-07-29 | Multitienda fase 1: tabla `stores`, `store_id` obligatorio y slug único por tienda |
+| 2026-07-29 | Multitienda fase 2: `profiles`, aislamiento por RLS y copia del catálogo |
+
+> Las migraciones se aplican en orden de fecha. Cuando dos comparten fecha, el
+> orden alfabético del nombre respeta la dependencia entre ellas.
+
+## Multitienda
+
+Un mismo proyecto Supabase aloja varias tiendas: `stores` las lista y
+`products`, `brands`, `categories` (y `settings`, donde exista) llevan
+`store_id`. `product_images` no lo lleva a propósito — pertenece a un producto,
+y el producto ya sabe de qué tienda es.
+
+### Usuarios y permisos
+
+`profiles` vincula cada usuario de Supabase Auth con su tienda y su rol:
+
+| Rol           | `store_id` | Alcance                             |
+| ------------- | ---------- | ----------------------------------- |
+| `super_admin` | opcional   | Todas las tiendas, con selector      |
+| `admin`       | obligatorio| Solo la suya                         |
+
+### El aislamiento lo impone la base de datos
+
+Las políticas RLS se separan **por rol de Postgres**:
+
+| Rol de Postgres | SELECT | Escritura |
+| --------------- | ------ | --------- |
+| `anon` (la web pública) | Todo el catálogo | Ninguna |
+| `authenticated` (el panel) | Solo su tienda | Solo su tienda |
+
+Dos funciones `SECURITY DEFINER` (`current_store_id()` e `is_super_admin()`)
+resuelven el perfil sin provocar recursión al evaluar las políticas de
+`profiles`.
+
+El filtro por `store_id` que hacen los servicios **no es** el mecanismo de
+seguridad: existe porque el super_admin sí puede ver todas las tiendas y hay
+que mostrarle una sola. Aunque alguien manipulara las consultas desde la
+consola del navegador, Postgres seguiría devolviendo cero filas de otra tienda.
+
+**Límite conocido y deliberado:** el rol anónimo lee el catálogo de todas las
+tiendas. Es necesario para que cada web pública funcione sin login, y no
+expone nada que no esté ya publicado.
+
+### Imágenes compartidas
+
+Cuando una tienda arranca copiando el catálogo de otra, ambas apuntan a los
+mismos archivos de Storage (las filas se duplican; los archivos no). Por eso al
+eliminar un producto **el archivo solo se borra si ninguna otra fila lo
+referencia** — ver `findUnreferencedUrls()` en `product-images.service.js`.
 
 ## Enlace público (slug)
 

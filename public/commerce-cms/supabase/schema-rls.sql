@@ -16,6 +16,7 @@
 -- -----------------------------------------------------------------------------
 -- 1. Activar RLS en todas las tablas
 -- -----------------------------------------------------------------------------
+alter table public.stores         enable row level security;
 alter table public.categories     enable row level security;
 alter table public.brands         enable row level security;
 alter table public.products       enable row level security;
@@ -25,10 +26,14 @@ alter table public.product_images enable row level security;
 -- -----------------------------------------------------------------------------
 -- 2. Lectura pública (la tienda muestra el catálogo sin necesidad de login)
 -- -----------------------------------------------------------------------------
+drop policy if exists "lectura publica stores"         on public.stores;
 drop policy if exists "lectura publica categories"     on public.categories;
 drop policy if exists "lectura publica brands"         on public.brands;
 drop policy if exists "lectura publica products"       on public.products;
 drop policy if exists "lectura publica product_images" on public.product_images;
+
+create policy "lectura publica stores"
+  on public.stores for select using (true);
 
 create policy "lectura publica categories"
   on public.categories for select using (true);
@@ -47,10 +52,15 @@ create policy "lectura publica product_images"
 -- 3. Escritura solo para usuarios autenticados (el CMS)
 --    `for all` cubre insert, update y delete.
 -- -----------------------------------------------------------------------------
+drop policy if exists "escritura autenticada stores"         on public.stores;
 drop policy if exists "escritura autenticada categories"     on public.categories;
 drop policy if exists "escritura autenticada brands"         on public.brands;
 drop policy if exists "escritura autenticada products"       on public.products;
 drop policy if exists "escritura autenticada product_images" on public.product_images;
+
+create policy "escritura autenticada stores"
+  on public.stores for all to authenticated
+  using (true) with check (true);
 
 create policy "escritura autenticada categories"
   on public.categories for all to authenticated
@@ -90,7 +100,7 @@ create policy "escritura autenticada imagenes"
 
 
 -- -----------------------------------------------------------------------------
--- 5. Comprobación: debe devolver 4 tablas con rls_activo = true y 2 políticas
+-- 5. Comprobación: debe devolver 5 tablas con rls_activo = true y 2 políticas
 --    cada una (una de lectura pública y una de escritura autenticada).
 -- -----------------------------------------------------------------------------
 select
@@ -101,7 +111,7 @@ from pg_tables t
 left join pg_policies p
   on p.schemaname = t.schemaname and p.tablename = t.tablename
 where t.schemaname = 'public'
-  and t.tablename in ('categories', 'brands', 'products', 'product_images')
+  and t.tablename in ('stores', 'categories', 'brands', 'products', 'product_images')
 group by t.tablename, t.rowsecurity
 order by t.tablename;
 

@@ -22,6 +22,7 @@ import {
 } from './repository.js';
 import { listBrands } from './brands.service.js';
 import { slugify } from '../core/format.js';
+import { getStoreId } from '../core/session.js';
 import {
   oneOf,
   optionalId,
@@ -86,7 +87,11 @@ async function listProducts(options = {}) {
       searchColumns: SEARCH_COLUMNS,
       limit,
       offset,
-      filters: { category_id: categoryId, brand_id: brandId },
+      filters: {
+        store_id: getStoreId(),
+        category_id: categoryId,
+        brand_id: brandId,
+      },
     });
 
   const rows = await withEmbedFallback(
@@ -124,7 +129,11 @@ export async function listProductsPage(options = {}) {
       page,
       pageSize,
       orFilter,
-      filters: { category_id: categoryId, brand_id: brandId },
+      filters: {
+        store_id: getStoreId(),
+        category_id: categoryId,
+        brand_id: brandId,
+      },
     });
 
   const { rows, total } = await withEmbedFallback(
@@ -167,9 +176,9 @@ export async function getProduct(id) {
   return normalize(row);
 }
 
-/** Total de productos (dashboard). */
+/** Total de productos de la tienda activa (dashboard). */
 export function countProducts() {
-  return countRows(TABLE);
+  return countRows(TABLE, { filters: { store_id: getStoreId() } });
 }
 
 /**
@@ -223,6 +232,9 @@ async function toRecord(input, { currentId = null } = {}) {
     available: requiredBoolean(input.available ?? true, { field: 'Disponible' }),
     category_id: optionalId(input.categoryId ?? input.category_id),
     brand_id: optionalId(input.brandId ?? input.brand_id),
+    // Lo pone el servicio, nunca el formulario: un producto no puede acabar
+    // en otra tienda por un descuido de la interfaz.
+    store_id: getStoreId(),
   };
 
   // `condition` solo se valida si el formulario envía un valor.
@@ -256,9 +268,12 @@ async function resolveSlug({ desired, name, currentId }) {
  * Se piden de una sola vez todos los slugs que empiezan por la base y se
  * decide en memoria, en lugar de consultar una vez por candidato.
  *
+ * La búsqueda se limita a la tienda activa porque el slug es único POR TIENDA:
+ * que Alprecio tenga `nevera-12-kg` no impide que Nicolás Pastrán la tenga.
+ *
  * Esto resuelve los choques del día a día; la garantía dura la da el índice
- * único de la base de datos (ver `supabase/migrations/`), que además cubre el
- * caso de dos personas guardando a la vez.
+ * único (store_id, slug) de la base de datos, que además cubre el caso de dos
+ * personas guardando a la vez.
  */
 async function findFreeSlug(base, currentId) {
   const rows = await selectMany(TABLE, {
@@ -267,6 +282,7 @@ async function findFreeSlug(base, currentId) {
     orderBy: 'slug',
     ascending: true,
     limit: SLUG_LOOKUP_LIMIT,
+    filters: { store_id: getStoreId() },
   });
 
   const taken = new Set(

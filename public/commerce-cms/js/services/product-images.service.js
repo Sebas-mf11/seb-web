@@ -11,6 +11,7 @@ import {
   deleteById,
   deleteWhere,
   insertOne,
+  selectIn,
   selectMany,
   updateById,
 } from './repository.js';
@@ -70,6 +71,29 @@ export function deleteProductImage(id) {
  */
 export function deleteImagesOfProduct(productId) {
   return deleteWhere(TABLE, 'product_id', requiredId(productId, 'producto'));
+}
+
+/**
+ * De una lista de URLs, devuelve las que ya no usa ningún producto.
+ *
+ * Existe porque varias tiendas pueden apuntar al mismo archivo: cuando una
+ * tienda copió su catálogo de otra, las dos comparten las mismas imágenes en
+ * Storage. Borrar el archivo al eliminar un producto dejaría a la otra tienda
+ * con las fotos rotas.
+ *
+ * Se llama SIEMPRE después de haber borrado las filas, nunca antes.
+ *
+ * @param {string[]} urls
+ * @returns {Promise<string[]>} solo las que ya nadie referencia.
+ */
+export async function findUnreferencedUrls(urls) {
+  const candidatas = [...new Set((urls ?? []).filter(Boolean))];
+  if (candidatas.length === 0) return [];
+
+  const enUso = await selectIn(TABLE, 'image_url', candidatas, 'image_url');
+  const ocupadas = new Set(enUso.map((row) => row.image_url));
+
+  return candidatas.filter((url) => !ocupadas.has(url));
 }
 
 /* ------------------------------------------------------------------ mapeo */

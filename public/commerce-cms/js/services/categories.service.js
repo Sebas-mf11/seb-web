@@ -17,6 +17,7 @@ import {
   updateById,
 } from './repository.js';
 import { optionalText, requiredId, requiredText } from '../core/validate.js';
+import { getStoreId } from '../core/session.js';
 
 const TABLE = 'categories';
 const COLUMNS = 'id, name, description, created_at';
@@ -36,6 +37,7 @@ export async function listCategories({ search = '', limit, offset } = {}) {
     searchColumns: SEARCH_COLUMNS,
     limit,
     offset,
+    filters: { store_id: getStoreId() },
   });
 
   return rows.map(normalize);
@@ -56,14 +58,15 @@ export async function listCategoriesPage({ search = '', page = 1, pageSize = 10 
     pageSize,
     search,
     searchColumns: SEARCH_COLUMNS,
+    filters: { store_id: getStoreId() },
   });
 
   return pageResult(rows, normalize, { total, page, pageSize });
 }
 
-/** Total de categorías (dashboard). */
+/** Total de categorías de la tienda activa (dashboard). */
 export function countCategories() {
-  return countRows(TABLE);
+  return countRows(TABLE, { filters: { store_id: getStoreId() } });
 }
 
 /**
@@ -96,11 +99,16 @@ export function deleteCategory(id) {
 
 /* ------------------------------------------------------------------ mapeo */
 
-/** Formulario -> fila de la base de datos (valida por el camino). */
+/**
+ * Formulario -> fila de la base de datos (valida por el camino).
+ * El `store_id` lo pone el servicio, nunca el formulario: así una categoría no
+ * puede acabar en otra tienda por un descuido de la interfaz.
+ */
 function toRecord({ name, description }) {
   return {
     name: requiredText(name, { field: 'Nombre', max: 120 }),
     description: optionalText(description, { field: 'Descripción', max: 500 }),
+    store_id: getStoreId(),
   };
 }
 

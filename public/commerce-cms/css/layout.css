@@ -243,6 +243,11 @@ body.is-booting .auth {
   font-size: 0.8rem;
 }
 
+/* El nombre de la tienda puede ser largo: se recorta en vez de desbordar */
+.sidebar__brand-text {
+  min-width: 0;
+}
+
 .sidebar__name {
   display: block;
   font-weight: 600;

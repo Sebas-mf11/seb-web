@@ -9,6 +9,7 @@ import { initPage } from './app.js';
 import { deleteProduct, listProductsPage } from './services/products.service.js';
 import {
   deleteImagesOfProduct,
+  findUnreferencedUrls,
   listImagesOfProduct,
 } from './services/product-images.service.js';
 import { pathFromPublicUrl, removeFiles } from './services/storage.service.js';
@@ -264,13 +265,20 @@ async function handleDelete(id, name) {
   if (!confirmed) return;
 
   try {
-    // Orden importante: primero los archivos y sus registros, después el
-    // producto. Al revés quedarían imágenes huérfanas imposibles de localizar.
+    // Orden importante: primero los registros de imagen, después los archivos
+    // que queden sin dueño, y al final el producto.
+    //
+    // Los archivos se borran DESPUÉS de quitar las filas y solo si ya no los
+    // usa nadie: dos tiendas que copiaron el mismo catálogo comparten las
+    // mismas imágenes en Storage, y borrarlas sin mirar dejaría a la otra
+    // tienda con las fotos rotas.
     const images = await listImagesOfProduct(id);
 
     if (images.length > 0) {
-      await removeFiles(images.map((image) => pathFromPublicUrl(image.url)));
       await deleteImagesOfProduct(id);
+
+      const huerfanas = await findUnreferencedUrls(images.map((image) => image.url));
+      await removeFiles(huerfanas.map(pathFromPublicUrl));
     }
 
     await deleteProduct(id);

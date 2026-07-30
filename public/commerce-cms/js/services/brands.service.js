@@ -15,6 +15,7 @@ import {
   updateById,
 } from './repository.js';
 import { requiredId, requiredText } from '../core/validate.js';
+import { getStoreId } from '../core/session.js';
 
 const TABLE = 'brands';
 const COLUMNS = 'id, name, created_at';
@@ -34,6 +35,7 @@ export async function listBrands({ search = '', limit, offset } = {}) {
     searchColumns: SEARCH_COLUMNS,
     limit,
     offset,
+    filters: { store_id: getStoreId() },
   });
 
   return rows.map(normalize);
@@ -54,14 +56,15 @@ export async function listBrandsPage({ search = '', page = 1, pageSize = 10 } = 
     pageSize,
     search,
     searchColumns: SEARCH_COLUMNS,
+    filters: { store_id: getStoreId() },
   });
 
   return pageResult(rows, normalize, { total, page, pageSize });
 }
 
-/** Total de marcas (dashboard). */
+/** Total de marcas de la tienda activa (dashboard). */
 export function countBrands() {
-  return countRows(TABLE);
+  return countRows(TABLE, { filters: { store_id: getStoreId() } });
 }
 
 /** @param {{name: string}} input */
@@ -83,8 +86,12 @@ export function deleteBrand(id) {
 
 /* ------------------------------------------------------------------ mapeo */
 
+/** El `store_id` lo pone el servicio, nunca el formulario. */
 function toRecord({ name }) {
-  return { name: requiredText(name, { field: 'Nombre', max: 120 }) };
+  return {
+    name: requiredText(name, { field: 'Nombre', max: 120 }),
+    store_id: getStoreId(),
+  };
 }
 
 function normalize(row) {

@@ -22,6 +22,7 @@ import {
 import {
   addProductImage,
   deleteProductImage,
+  findUnreferencedUrls,
   listImagesOfProduct,
   updateImageOrder,
 } from './services/product-images.service.js';
@@ -290,7 +291,9 @@ function removeMedia(index) {
   if (!item) return;
 
   if (item.kind === 'existing') {
-    state.removed.push({ imageId: item.imageId, path: pathFromPublicUrl(item.url) });
+    // Se guarda la URL, no la ruta: al confirmar hay que comprobar si algún
+    // otro producto sigue usando ese archivo antes de borrarlo.
+    state.removed.push({ imageId: item.imageId, url: item.url });
   } else {
     URL.revokeObjectURL(item.previewUrl);
   }
@@ -404,11 +407,18 @@ function readForm() {
  * necesitan su id para la ruta en Storage.
  */
 async function syncImages(id) {
-  // 1. Borrar lo que el cliente quitó (primero el registro, luego el archivo).
+  // 1. Borrar lo que el cliente quitó: primero el registro y, del archivo,
+  //    solo el que ya no use ningún otro producto. Dos tiendas que copiaron el
+  //    mismo catálogo comparten las imágenes en Storage.
   for (const item of state.removed) {
     await deleteProductImage(item.imageId);
   }
-  await removeFiles(state.removed.map((item) => item.path));
+
+  if (state.removed.length > 0) {
+    const huerfanas = await findUnreferencedUrls(state.removed.map((item) => item.url));
+    await removeFiles(huerfanas.map(pathFromPublicUrl));
+  }
+
   state.removed = [];
 
   // 2. Recorrer la galería en orden: el índice es el nuevo `sort_order`.

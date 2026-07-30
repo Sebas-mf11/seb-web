@@ -17,15 +17,34 @@ import { AppError, unwrap } from '../core/errors.js';
 
 /**
  * Cuenta filas sin traerlas: `head: true` pide solo la cabecera con el total.
+ * @param {string} tableName
+ * @param {{filters?: Record<string, unknown>}} [options]
  * @returns {Promise<number>}
  */
-export async function countRows(tableName) {
-  const { count, error } = await db()
-    .from(tableName)
-    .select('id', { count: 'exact', head: true });
+export async function countRows(tableName, { filters = {} } = {}) {
+  let query = db().from(tableName).select('id', { count: 'exact', head: true });
+
+  Object.entries(filters).forEach(([column, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      query = query.eq(column, value);
+    }
+  });
+
+  const { count, error } = await query;
 
   if (error) throw error;
   return count ?? 0;
+}
+
+/**
+ * Filas cuyo valor de `column` está en la lista dada.
+ * Se usa para saber qué archivos siguen en uso antes de borrarlos.
+ * @returns {Promise<object[]>} vacío si no se pide nada.
+ */
+export async function selectIn(tableName, column, values, columns = '*') {
+  if (!values || values.length === 0) return [];
+
+  return unwrap(await db().from(tableName).select(columns).in(column, values));
 }
 
 /**

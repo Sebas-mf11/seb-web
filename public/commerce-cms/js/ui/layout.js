@@ -7,6 +7,12 @@
 import { BRANDING, ROUTES } from '../../supabase/config.js';
 import { $, el } from '../core/dom.js';
 import { initials } from '../core/format.js';
+import {
+  getActiveStore,
+  getStores,
+  isSuperAdmin,
+  setActiveStore,
+} from '../core/session.js';
 import { notify, setLoading } from '../core/ui.js';
 import { signOut } from '../auth.js';
 import { icon } from './icons.js';
@@ -51,15 +57,23 @@ function buildSidebar(active, user) {
 }
 
 function brandBlock() {
+  // Debajo del nombre del panel va la tienda en la que se está trabajando:
+  // es el dato que evita editar el catálogo equivocado.
+  const store = getActiveStore();
+
   return el('div', { class: 'sidebar__brand' }, [
     el('span', {
       class: 'sidebar__mark',
       text: BRANDING.appName.slice(0, 1).toUpperCase() || 'C',
       'aria-hidden': 'true',
     }),
-    el('span', {}, [
+    el('span', { class: 'sidebar__brand-text' }, [
       el('strong', { class: 'sidebar__name', text: BRANDING.appName }),
-      el('span', { class: 'sidebar__role', text: BRANDING.clientName }),
+      el('span', {
+        class: 'sidebar__role u-truncate',
+        text: store?.name ?? BRANDING.clientName,
+        title: store?.name ?? '',
+      }),
     ]),
   ]);
 }
@@ -160,10 +174,46 @@ function buildTopbar({ title, subtitle, actions }) {
     ...(subtitle ? [el('p', { class: 'topbar__subtitle', text: subtitle })] : []),
   ]);
 
-  const actionsBox = el('div', { class: 'topbar__actions' }, actions);
+  const actionsBox = el('div', { class: 'topbar__actions' }, [
+    ...storeSwitcher(),
+    ...actions,
+  ]);
 
   topbar.replaceChildren(toggle, heading, actionsBox);
-  document.title = `${title} · ${BRANDING.appName}`;
+
+  const store = getActiveStore();
+  document.title = store
+    ? `${title} · ${store.name}`
+    : `${title} · ${BRANDING.appName}`;
+}
+
+/**
+ * Selector de tienda: solo para el super_admin, y solo si administra más de
+ * una. Un admin normal no lo ve porque no tiene nada que elegir.
+ *
+ * Al cambiar se recarga la página: es la forma más simple y segura de que
+ * todas las pantallas y consultas partan de la nueva tienda, sin dejar restos
+ * del catálogo anterior en memoria.
+ */
+function storeSwitcher() {
+  if (!isSuperAdmin()) return [];
+
+  const stores = getStores();
+  if (stores.length <= 1) return [];
+
+  const select = el(
+    'select',
+    { class: 'select select--compact', 'aria-label': 'Tienda que estás administrando' },
+    stores.map((store) => el('option', { value: store.id, text: store.name })),
+  );
+
+  select.value = getActiveStore()?.id ?? '';
+
+  select.addEventListener('change', () => {
+    if (setActiveStore(select.value)) window.location.reload();
+  });
+
+  return [select];
 }
 
 /* ------------------------------------------------------ sidebar en móvil */

@@ -82,6 +82,22 @@
   box-shadow: 0 0 0 3px var(--c-accent-soft);
 }
 
+/* Versión reducida para la barra superior (selector de tienda) */
+.select--compact {
+  width: auto;
+  min-width: 150px;
+  max-width: 210px;
+  padding-block: 0.45rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .select--compact {
+    min-width: 0;
+    max-width: 130px;
+  }
+}
+
 .textarea {
   min-height: 130px;
   resize: vertical;
