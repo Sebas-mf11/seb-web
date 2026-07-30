@@ -335,32 +335,44 @@ order by tablename, policyname;
 --    - cuenta del cliente de Alprecio -> admin de Alprecio
 --    - cuenta de Nicolás Pastrán      -> admin de Nicolás Pastrán
 --
--- b) Vuelve aquí y ejecuta este bloque cambiando los correos.
---    Es re-ejecutable: si el perfil ya existe, lo actualiza.
+-- b) Mira los correos exactos que quedaron registrados:
 --
--- insert into public.profiles (id, store_id, role)
--- select u.id, null, 'super_admin'
---   from auth.users u where u.email = 'TU-CORREO@dominio.com'
--- on conflict (id) do update set role = excluded.role, store_id = excluded.store_id;
+-- select id, email, created_at, last_sign_in_at
+--   from auth.users
+--  order by created_at;
 --
+-- c) Asigna los perfiles cambiando SOLO los correos. Los uuid los resuelve
+--    Postgres a partir de auth.users, así que no hay que copiarlos a mano.
+--    Es re-ejecutable: si un perfil ya existe, lo actualiza.
+--
+-- with asignaciones (email, store_slug, rol) as (
+--   values
+--     ('TU-CORREO@dominio.com',        null::text,        'super_admin'),
+--     ('CLIENTE-ALPRECIO@dominio.com', 'alprecio',        'admin'),
+--     ('CLIENTE-NICOLAS@dominio.com',  'nicolas-pastran', 'admin')
+-- )
 -- insert into public.profiles (id, store_id, role)
--- select u.id, s.id, 'admin'
+-- select u.id, s.id, a.rol
+--   from asignaciones a
+--   join auth.users u on lower(u.email) = lower(trim(a.email))
+--   left join public.stores s on s.slug = a.store_slug
+-- on conflict (id) do update
+--   set role = excluded.role, store_id = excluded.store_id
+-- returning id, role, store_id;
+--
+-- d) Comprueba el resultado. Lista TODOS los usuarios, no solo los asignados:
+--    un correo mal escrito aparece aquí como "— SIN PERFIL —", que es el fallo
+--    más probable de este paso.
+--
+-- select u.email,
+--        coalesce(p.role, '— SIN PERFIL —') as rol,
+--        coalesce(s.name, '—')              as tienda
 --   from auth.users u
---   cross join public.stores s
---  where u.email = 'CLIENTE-ALPRECIO@dominio.com' and s.slug = 'alprecio'
--- on conflict (id) do update set role = excluded.role, store_id = excluded.store_id;
+--   left join public.profiles p on p.id = u.id
+--   left join public.stores   s on s.id = p.store_id
+--  order by p.role nulls last, u.email;
 --
--- insert into public.profiles (id, store_id, role)
--- select u.id, s.id, 'admin'
---   from auth.users u
---   cross join public.stores s
---  where u.email = 'CLIENTE-NICOLAS@dominio.com' and s.slug = 'nicolas-pastran'
--- on conflict (id) do update set role = excluded.role, store_id = excluded.store_id;
---
--- c) Comprueba el resultado:
--- select u.email, p.role, s.name as tienda
---   from public.profiles p
---   join auth.users u on u.id = p.id
---   left join public.stores s on s.id = p.store_id
---  order by p.role, u.email;
+-- Nota: si intentas asignar un admin a un slug de tienda inexistente, el
+-- INSERT falla por la restricción profiles_admin_con_tienda en lugar de crear
+-- un perfil sin tienda. Slugs válidos: 'alprecio' y 'nicolas-pastran'.
 -- -----------------------------------------------------------------------------
